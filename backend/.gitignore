@@ -1,3 +1,3 @@
-.env
-/src/models/userRoutes.js
+./src/models/userRoutes.js
 node_modules
+/.env
