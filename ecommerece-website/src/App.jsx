@@ -2,7 +2,7 @@ function App() {
 
   return (
     <>   
-      <h1 className="">
+      <h1 className="bg-primary">
         testing tailwindcss
       </h1>     
     </>

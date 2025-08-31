@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+.bg-primary { background-color: #293239; }
+.bg-secondary { background-color: #1A2529; }
+.text-textLight { color: #E0E0E0; }
+.bg-accent { background-color: #4CAF50; }
+.font-rowdies { font-family: 'Rowdies', sans-serif; }
+.font-pavanam { font-family: 'Pavanam', sans-serif; }
