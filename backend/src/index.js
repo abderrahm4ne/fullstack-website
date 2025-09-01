@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
 import userRoutes from './routes/userRoutes.js'
+import mongoConnection from './db/mongo.js'
 
 dotenv.config()
 
@@ -23,6 +24,8 @@ app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
+
+mongoConnection;
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
