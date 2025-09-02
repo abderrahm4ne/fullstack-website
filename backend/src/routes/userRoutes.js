@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import validateUser from '../middlewares/validation.js'
 import User from '../models/users.js'
 import adminAuthentication from '../middlewares/auth.js';
+import Product from '../models/products.js';
 
 const router = express.Router();
 
@@ -73,7 +74,12 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/admin/products', adminAuthentication, async (req, res) => {
-
+    try {
+        const products = await Product.find();
+        res.status(200).json({ products });
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error', err: error.message });
+    }
 })
 
 export default router;
