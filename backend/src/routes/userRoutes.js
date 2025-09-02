@@ -2,6 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import validateUser from '../middlewares/validation.js'
 import User from '../models/users.js'
+import adminAuthentication from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -21,7 +22,8 @@ router.post('/register', validateUser, async (req, res) => {
             firstName,
             lastName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: 'user'
         })
 
         await user.save();
@@ -29,9 +31,10 @@ router.post('/register', validateUser, async (req, res) => {
         res.status(201).json({
             message: 'User registered successfully',
             user: {
-                firstName: firstName,
-                lastName: lastName,
-                email: email
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role: user.role
             }
         })
         
@@ -57,10 +60,20 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message : 'Invalid Password'})
         }
 
-        res.status(200).json({ message : 'Login successful'})
+        const token = jwt.sign(
+            { id: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '  1h' }
+        )
+
+        res.status(200).json({ message : 'Login successful', token: token})
     } catch (error) {
         res.status(500).json({ message: 'Internal server error', err: error.message });
     }
+})
+
+router.get('/admin/products', adminAuthentication, async (req, res) => {
+
 })
 
 export default router;
