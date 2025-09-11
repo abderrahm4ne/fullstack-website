@@ -1,11 +1,20 @@
+import { createHashRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import NavBar from './components/NavBar';
+
 function App() {
 
+  const router = createHashRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<NavBar />}>
+      </Route>
+    )
+  )
+  
+
   return (
-    <>   
-      <h1 className="bg-primary">
-        testing tailwindcss
-      </h1>     
-    </>
+
+    <RouterProvider router={router} />
+    
   )
 }
 
