@@ -2,14 +2,20 @@
 
 
 
-.bg-primary { background-color: #e0e0bc; }
-.cream { background-color: #FFFDD0;}
-.border-color { border-color: #FFFDD0;}
-.c-green { background-color: #2E4A3D; }
+.bg-primary { background-color: #cfcfb0; }
+.brand-red { color: #722323;}
+.brand-blue { color: #070147;}
+.brand-green { color: #016318; }
 .c-red { color: #4A2C2A;}
 .c-grey { background-color: #333333;}
 .text-textLight { color: #1A2529; }
-.text-routes { color: #690901; }
+.text-routes { color: #154D71; }
 .bg-accent { background-color: #4CAF50; }
 .font-logo { font-family: 'Luxurious Script', sans-serif; }
-.font-routes {font-family: 'Montserrat', sans-serif;}
+.font-routes {font-family: 'Average Sans', sans-serif;}
+
+.routes:hover {
+    transition: scale 0.3s ease;
+    color: #350000;
+    transform: scale(1.02);
+}
