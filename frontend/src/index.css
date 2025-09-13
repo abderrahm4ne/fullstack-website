@@ -1,10 +1,15 @@
 @import "tailwindcss";
 
+
+
 .bg-primary { background-color: #e0e0bc; }
 .cream { background-color: #FFFDD0;}
+.border-color { border-color: #FFFDD0;}
 .c-green { background-color: #2E4A3D; }
-.c-red { background-color: #4A2C2A;}
+.c-red { color: #4A2C2A;}
 .c-grey { background-color: #333333;}
 .text-textLight { color: #1A2529; }
+.text-routes { color: #690901; }
 .bg-accent { background-color: #4CAF50; }
 .font-logo { font-family: 'Luxurious Script', sans-serif; }
+.font-routes {font-family: 'Montserrat', sans-serif;}
