@@ -3,6 +3,7 @@
 
 
 .bg-primary { background-color: #cfcfb0; }
+.bg-secondary { background-color: #f0e6d2; }
 .brand-red { color: #722323;}
 .brand-blue { color: #070147;}
 .brand-green { color: #016318; }
@@ -15,7 +16,12 @@
 .font-routes {font-family: 'Average Sans', sans-serif;}
 
 .routes:hover {
-    transition: scale 0.3s ease;
-    color: #350000;
-    transform: scale(1.02);
+    transition: transform 0.3s ease;
+    color: #470101;
+    transform: scale(1.03);
+}
+
+.ham-menu:hover {
+    background-color: #f8f3e9;
+    color: #470101;
 }
