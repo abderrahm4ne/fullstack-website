@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,10 +22,10 @@ export default function NavBar() {
         <div className="flex-1 flex justify-center">
           <div className="hidden sm:flex md:space-x-3.5 space-x-2">
 
-            <NavLink to="#" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">HOME</NavLink>
-            <NavLink to="#" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">PRODUCTS</NavLink>
-            <NavLink to="#" className="font-bold text-center routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">ABOUT US</NavLink>
-            <NavLink to="#" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">CONTACT</NavLink>
+            <NavLink to="home" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">HOME</NavLink>
+            <NavLink to="products" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">PRODUCTS</NavLink>
+            <NavLink to="about" className="font-bold text-center routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">ABOUT US</NavLink>
+            <NavLink to="contact" className="font-bold routes font-routes text-black xl:text-[1.3rem] sm:text-[1.1rem] text-[1rem]">CONTACT</NavLink>
 
           </div>
         </div>
@@ -50,12 +50,18 @@ export default function NavBar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="sm:hidden bg-secondary border-b flex flex-col ">
-          <NavLink to="#" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>HOME</NavLink>
-          <NavLink to="#" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>PRODUCTS</NavLink>
-          <NavLink to="#" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>ABOUT US</NavLink>
-          <NavLink to="#" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 w-full" onClick={() => setMenuOpen(false)}>CONTACT</NavLink>
+          <NavLink to="home" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>HOME</NavLink>
+          <NavLink to="products" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>PRODUCTS</NavLink>
+          <NavLink to="about" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>ABOUT US</NavLink>
+          <NavLink to="contact" className="font-bold ham-menu text-center font-routes text-black text-[1.1rem] py-3 w-full" onClick={() => setMenuOpen(false)}>CONTACT</NavLink>
         </div>
       )}
+
+      <Outlet />
+
+      <div className="w-full bg-[#2c0101] text-white text-center py-4 text-xl">
+        // // // is Algerian brand © 2025 All rights reserved.
+      </div>
 
       </div>
   );
