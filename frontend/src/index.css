@@ -1,9 +1,14 @@
 @import "tailwindcss";
 
+::selection{
+    background-color: #154D71;
+    color: black;
+}
 
 
-.bg-primary { background-color: #cfcfb0; }
+.bg-primary { background-color: #f5f5e2; }
 .bg-secondary { background-color: #f0e6d2; }
+.creamy { color: #f8f3e9}
 .brand-red { color: #722323;}
 .brand-blue { color: #070147;}
 .brand-green { color: #016318; }
@@ -24,4 +29,9 @@
 .ham-menu:hover {
     background-color: #f8f3e9;
     color: #470101;
+}
+
+.btn:active {
+    transform: scale(0.99);
+    transition: transform 0.2s ease;
 }
