@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import Button from '@mui/material/Button';
+import { useState, useEffect, useRef } from "react";
+import { gsap } from 'gsap'
 import img1 from '../../assets/img1.jpg';
 import img2 from '../../assets/img2.jpg';
 import img3 from '../../assets/img3.jpg';
@@ -16,26 +16,31 @@ export default function Photo() {
 
   const [current, setCurrent] = useState(0);
 
+  const mainImgRef = useRef(null);
+  const leftImgRef = useRef(null);
+  const rightImgRef = useRef(null);
+
   const nextImage = () => {
-    setCurrent((prev) => (prev + 1) % images.length);
+      setCurrent((prev) => (prev + 1) % images.length); // change AFTER animation
   };
 
   const prevImage = () => {
-    setCurrent((prev) => (prev - 1 + images.length) % images.length);
+      setCurrent((prev) => (prev - 1 + images.length) % images.length);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       nextImage();
-    }, 3000); // 3000ms = 3 seconds
-
-    return () => clearInterval(interval); // cleanup when component unmounts
+    }, 6000);
+    return () => clearInterval(interval);
   }, [current]);
+
 
   return (
     <div className="relative flex items-center justify-center ml-10 mb-20">
 
       <img
+        ref={rightImgRef}
         src={images[(current + 1) % images.length]}
         alt="Behind Right"
         className="absolute w-[380px] h-[650px] ml-8 object-cover rounded-xl shadow-md opacity-70"
@@ -43,6 +48,7 @@ export default function Photo() {
       />
 
       <img
+        ref={leftImgRef}
         src={images[(current + 2) % images.length]}
         alt="Behind Left"
         className="absolute w-[380px] h-[650px] mr-8 object-cover rounded-xl shadow-md opacity-70"
@@ -50,6 +56,8 @@ export default function Photo() {
       />
 
       <img
+        key={current}
+        ref={mainImgRef}
         src={images[current]}
         alt="Main"
         className="relative w-[380px] h-[700px] object-cover rounded-xl shadow-lg"

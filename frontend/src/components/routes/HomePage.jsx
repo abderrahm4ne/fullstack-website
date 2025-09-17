@@ -17,7 +17,7 @@ export default function HomePage() {
           With Nadzheee
         </h1>
         <p className="text-gray-400 fonts-routes italic" style={{ textShadow: '-5px 2px 10px rgba(0, 0, 0, 1)' }}>
-          “Own a piece of history today, Where timeless value meets your style And because true style never ages.”
+          “Own a piece of history today. Where timeless value meets your style And because true style never ages.”
         </p>
         <Button size="lg" variant='contained' style={{ backgroundColor: '#2c0101', textTransform: 'none', padding: '10px 20px', fontSize: '1.3rem', marginTop: '10px', width: '100%', textAlign: 'center', color:"#f8f3e9", border:" 1px solid white" }} className='btn' onClick={() => (navigate('/products'))}>
           Order Now
