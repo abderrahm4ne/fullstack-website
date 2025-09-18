@@ -22,7 +22,7 @@
 
 .routes:hover {
     transition: transform 0.3s ease;
-    color: #470101;
+    color: #f3ebdb;
     transform: scale(1.03);
 }
 
@@ -31,7 +31,8 @@
     color: #470101;
 }
 
-.btn:active {
+.btn:hover {
     transform: scale(0.99);
     transition: transform 0.2s ease;
+    cursor: pointer;
 }
