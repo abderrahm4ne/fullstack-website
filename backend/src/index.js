@@ -2,9 +2,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
-import userRoutes from './routes/userRoutes.js'
-import productRoutes from './routes/productRoutes.js'
-import mongoConnection from './db/mongo.js'
+import userRoutes from '../../../backend/src/routes/userRoutes.js'
+import productRoutes from '../../../backend/src/routes/productRoutes.js'
+import mongoConnection from '../../../backend/src/db/mongo.js'
 
 dotenv.config()
 

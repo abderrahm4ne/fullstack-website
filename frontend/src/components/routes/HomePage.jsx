@@ -8,7 +8,7 @@ export default function HomePage() {
     const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen px-6  bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center min-h-screen px-6  bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black pt-25 ">
 
       {/* Left Section */}
       <div className="flex flex-col items-center text-center md:items-start md:text-left max-w-md gap-2">

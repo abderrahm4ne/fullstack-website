@@ -43,7 +43,7 @@ export default function Photo() {
         ref={rightImgRef}
         src={images[(current + 1) % images.length]}
         alt="Behind Right"
-        className="absolute w-[380px] h-[650px] ml-8 object-cover rounded-xl shadow-md opacity-70"
+        className="absolute xl:w-[380px] xl:h-[600px] md:w-[300px] md:h-[500px] w-[270px] h-[550px] ml-8 object-cover rounded-xl shadow-md opacity-70"
         style={{rotate: "3deg", boxShadow:"6px -3px 10px #333333"}}
       />
 
@@ -51,7 +51,7 @@ export default function Photo() {
         ref={leftImgRef}
         src={images[(current + 2) % images.length]}
         alt="Behind Left"
-        className="absolute w-[380px] h-[650px] mr-8 object-cover rounded-xl shadow-md opacity-70"
+        className="absolute xl:w-[380px] xl:h-[600px] md:w-[300px] md:h-[500px] w-[270px] h-[550px] mr-8 object-cover rounded-xl shadow-md opacity-70"
         style={{rotate: "-3deg", boxShadow:"-6px -3px 10px #333333"}}
       />
 
@@ -60,7 +60,7 @@ export default function Photo() {
         ref={mainImgRef}
         src={images[current]}
         alt="Main"
-        className="relative w-[380px] h-[700px] object-cover rounded-xl shadow-lg"
+        className="relative xl:w-[380px] xl:h-[600px] md:w-[300px] md:h-[500px] w-[270px] h-[550px] object-cover rounded-xl shadow-lg"
         style={{boxShadow:"0px 2px 10px #333333"}}
       />
 
