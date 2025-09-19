@@ -1,19 +1,31 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import dotenv from 'dotenv'
 import Button from "@mui/material/Button";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import axios from "axios"
 import "swiper/css";
 
-const products = [
-  
-];
 
 export default function ProductsPage() {
 
-  const navigate = useNavigate();
+dotenv.config();
 
+  const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try{
+        const res = await axios.get(`${process.env.FRONTEND_API_URL}/api/products`)
+        setProducts(res.data)
+      }
+      catch(err){
+        setError(err);
+      }
+      
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black text-white pb-20">
