@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import dotenv from 'dotenv'
 import Button from "@mui/material/Button";
 import axios from "axios"
 import "swiper/css";
@@ -7,7 +6,6 @@ import "swiper/css";
 
 export default function ProductsPage() {
 
-dotenv.config();
 
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -17,14 +15,20 @@ dotenv.config();
   useEffect(() => {
     const fetchProducts = async () => {
       try{
-        const res = await axios.get(`${process.env.FRONTEND_API_URL}/api/products`)
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`)
         setProducts(res.data)
       }
       catch(err){
         setError(err);
+        console.error('error occured :', err)
+      }
+      finally{
+        setLoading(false);
       }
       
     }
+
+    fetchProducts();
   }, [])
 
   return (
@@ -42,10 +46,10 @@ dotenv.config();
       {/* Category Filters */}
       <div className="container mx-auto px-6 mb-12">
         <div className="flex justify-center space-x-4 md:space-x-8 font-routes">
-          {["all", "classic", "modern", "luxury", "sports"].map(category => (
+          {["all", "old money", "model2", "model3", "model4"].map(category => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-full btn transition-all text-xl w-[7%] ${
+              className={`px-4 py-2 rounded-full btn transition-all text-xl w-[9%] ${
                 selectedCategory === category 
                   ? "bg-[#f8f3e9] text-[#2c0101]" 
                   : "text-creamy border border-creamy"
@@ -61,8 +65,42 @@ dotenv.config();
       {/* Products Grid */}
       <div className="container mx-auto px-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+          { 
+
+            Array.isArray(products) && products
+            .filter(product => selectedCategory === "all" || product.category === selectedCategory)
+            .map(product => (
+                      <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      />
+
+                      <div className="p-6 flex flex-col justify-between h-56">
+                        <div>
+                          <h3 className="text-2xl font-semibold creamy mb-2 group-hover:text-[#f8f3e9] transition-colors">
+                            {product.name} sadsad 
+                          </h3>
+                          <p className="text-gray-300 text-sm line-clamp-3">
+                            {product.description} zxczxc
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-4">
+                          <span className="text-xl font-bold text-[#f8f3e9]">{product.price} DZD</span>
+                          <button className="px-4 py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-all hover:cursor-pointer">
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                      </div>
+                      ))
+          }
           
-        </div>
+
+      </div>
       </div>
 
 
@@ -90,6 +128,7 @@ dotenv.config();
           Contact Us
         </Button>
       </div>
+
     </div>
   );
 }

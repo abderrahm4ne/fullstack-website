@@ -19,12 +19,12 @@ router.post('/admin/add/product', adminAuthentication, async (req, res) => {
 
     try {
         const product = new Product({
-            name,
-            description,
-            price,
-            category,
-            image,
-            stock
+                name,
+                description,
+                price,
+                category,
+                image,
+                stock
         });
 
         await product.save();

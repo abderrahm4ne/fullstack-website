@@ -2,9 +2,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
-import userRoutes from './routes/userRoutes.js'
-import productRoutes from './routes/productRoutes.js'
-import mongoConnection from './db/mongo.js'
+import userRoutes from '../src/routes/userRoutes.js'
+import productRoutes from '../src/routes/productRoutes.js'
+import mongoConnection from '../src/db/mongo.js'
 
 dotenv.config()
 
@@ -14,14 +14,13 @@ app.use(helmet());
 app.use(cors(
     {
         origin: process.env.FRONTEND_URL,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        credentials: true
+        methods: ['GET', 'POST', 'PUT', 'DELETE']
     }
 ))
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
+app.use('/api', productRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <div className="flex flex-col ">
 
-      <div className="w-full bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black flex flex-row items-center py-3 xl:px-20 md:px-7 px-5  justify-between border-b border-[#f8f3e9]">
+      <div className="w-full bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black flex flex-row items-center py-3 xl:px-20 md:px-7 px-5  justify-between border-b border-[#f8f3e9] ">
 
         {/* Left - Logo */}
         <div className="flex-1 flex justify-start tracking-wider">

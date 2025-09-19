@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+*{
+    font-family: 'Average Sans', sans-serif;
+    user-select: none;
+}
+
 ::selection{
     background-color: #154D71;
     color: black;
