@@ -2,6 +2,7 @@ import { createHashRouter, createRoutesFromElements, Route, RouterProvider } fro
 import NavBar from './components/NavBar';
 import HomePage from './components/routes/HomePage';
 import ProductsPage from './components/routes/ProductsPage';
+import AboutUsPage from './components/routes/AboutUsPage';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <Route path='' element={<NavBar />}>
         <Route index element={<HomePage />} />
         <Route path='products' element={<ProductsPage />} />
+        <Route path='about-us' element={<AboutUsPage />} />
       </Route>
     )
   )

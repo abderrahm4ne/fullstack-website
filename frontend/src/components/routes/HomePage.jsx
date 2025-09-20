@@ -1,5 +1,3 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import Photo from '../Swipper/Photo.jsx';

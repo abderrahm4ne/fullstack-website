@@ -29,7 +29,7 @@ export default function NavBar() {
 
             <NavLink to="" className="routes font-routes creamy xl:text-[1.2rem] sm:text-[1.1rem] text-[1rem]">HOME</NavLink>
             <NavLink to="products" className="routes font-routes creamy xl:text-[1.2rem] sm:text-[1.1rem] text-[1rem]">PRODUCTS</NavLink>
-            <NavLink to="about" className="text-center routes font-routes creamy xl:text-[1.2rem] sm:text-[1.1rem] text-[1rem]">ABOUT US</NavLink>
+            <NavLink to="about-us" className="text-center routes font-routes creamy xl:text-[1.2rem] sm:text-[1.1rem] text-[1rem]">ABOUT US</NavLink>
             <NavLink to="contact" className="routes font-routes creamy xl:text-[1.2rem] sm:text-[1.1rem] text-[1rem]">CONTACT</NavLink>
 
           </div>
