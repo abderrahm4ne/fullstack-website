@@ -44,12 +44,12 @@ export default function ProductsPage() {
       </div>
 
       {/* Category Filters */}
-      <div className="container mx-auto px-6 mb-12">
-        <div className="flex justify-center space-x-4 md:space-x-8 font-routes">
+      <div className="container justify-center mx-auto px-6 mb-12">
+        <div className="flex flex-wrap justify-center items-baseline space-x-4 space-y-3 md:space-x-8 font-routes ">
           {["all", "old money", "model2", "model3", "model4"].map(category => (
             <button
               key={category}
-              className={`px-4 py-2 rounded-full btn transition-all text-xl w-[9%] ${
+              className={`px-4 py-2 rounded-full btn transition-all text-xl ${
                 selectedCategory === category 
                   ? "bg-[#f8f3e9] text-[#2c0101]" 
                   : "text-creamy border border-creamy"
