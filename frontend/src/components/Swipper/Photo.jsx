@@ -37,7 +37,7 @@ export default function Photo() {
 
 
   return (
-    <div className="relative flex items-center justify-center mb-20">
+    <div className="relative flex items-center justify-center">
 
       <img
         ref={rightImgRef}
@@ -64,7 +64,7 @@ export default function Photo() {
         style={{boxShadow:"0px 2px 10px #333333"}}
       />
 
-      <div className="absolute -bottom-12 flex space-x-4">
+      <div className="absolute bottom-7 flex space-x-4">
 
         <NavigateBeforeIcon onClick={prevImage} className="creamy hover:cursor-pointer btn" style={{fontSize:"2rem"}}/>
 

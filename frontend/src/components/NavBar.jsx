@@ -38,7 +38,7 @@ export default function NavBar() {
         {/* Right - Icons */}
         <div className="flex-1 flex justify-end items-center space-x-3">
 
-          <ShoppingCartIcon style={{ fontSize: '2.1rem' }}  className=" creamy cursor-pointer routes" />
+          <NavLink to="CompleteYourOrder"> <ShoppingCartIcon style={{ fontSize: '2.1rem' }}  className=" creamy cursor-pointer routes"/></NavLink>
           <SearchIcon style={{ fontSize: '2.1rem' }} className=" creamy cursor-pointer routes" />
 
           <button className="sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>

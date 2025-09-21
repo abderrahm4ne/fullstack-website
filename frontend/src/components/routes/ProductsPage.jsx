@@ -33,6 +33,25 @@ export default function ProductsPage() {
     fetchProducts();
   }, [])
 
+  const getCart = () => {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
+  }
+
+  const addToCart = (product) => {
+    const cart = getCart()
+
+    const existing = cart.find( item => item._id === product._id);
+    if(existing){
+      existing.quantity += product.quantity || 1;
+    }
+    else {
+      cart.push({ ...product, quantity: product.quantity || 1 });
+    }
+    localStorage.setItem("cart", JSON.stringify(cart))
+
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black text-white pb-20">
       
@@ -48,7 +67,7 @@ export default function ProductsPage() {
       {/* Category Filters */}
       <div className="container justify-center mx-auto px-6 mb-12">
         <div className="flex flex-wrap justify-center items-baseline space-x-4 space-y-3 md:space-x-8 font-routes ">
-          {["all", "old money", "model2", "model3", "model4"].map(category => (
+          {["all", "oldmoney", "model2", "model3", "model4"].map(category => (
             <button
               key={category}
               className={`px-4 py-2 rounded-full btn transition-all text-xl ${
@@ -69,8 +88,8 @@ export default function ProductsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
           { 
-
-            Array.isArray(products) && products
+            loading ? (<h1>Loading products</h1>) :
+            (Array.isArray(products) && products
             .filter(product => selectedCategory === "all" || product.category === selectedCategory)
             .map(product => (
                       <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
@@ -92,14 +111,14 @@ export default function ProductsPage() {
 
                         <div className="flex justify-between items-center mt-4">
                           <span className="text-xl font-bold text-[#f8f3e9]">{product.price} DZD</span>
-                          <button className="px-4 py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-all hover:cursor-pointer"
-                          onClick={()=> (navigate('/contact'))}>
+                          <button className="px-4 bg-[#490101] py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#490101] transition-all hover:cursor-pointer"
+                          onClick={()=> { addToCart(product)}}>
                             Add to Cart
                           </button>
                         </div>
                       </div>
                       </div>
-                      ))
+                      )))
           }
           
 

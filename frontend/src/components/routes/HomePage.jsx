@@ -24,7 +24,7 @@ export default function HomePage() {
       </div>
 
       {/* Right Section (Slider) */}
-      <div className="mt-10 md:mt-0 md:ml-12 w-full max-w-lg">
+      <div className="mb-10 md:mt-0 md:ml-12 w-full max-w-lg">
         
         <Photo />
         
