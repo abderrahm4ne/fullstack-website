@@ -117,19 +117,20 @@ export default function AboutUsPage() {
 
       {/* CTA Section */}
       <div className="container mx-auto px-6 mt-12 text-center">
-        <h3 className="text-5xl md:text-6xl font-logo mb-6 creamy">Experience  Nadzheee</h3>
+        <h3 className="text-5xl md:text-6xl font-logo mb-6 creamy">Experience Nadzheee</h3>
         <p className="text-gray-300 max-w-2xl mx-auto mb-8">
           Discover the pieces that have made us a beloved brand for those who appreciate timeless style.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button 
-            className="bg-[#490101] px-6 py-3 text-[1.2rem] creamy border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all"
+            className="bg-[#490101] px-6 py-3 text-[1.2rem] border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all"
             onClick={() => navigate("/products")}
           >
             View Collection
           </button>
           <button 
-            className="bg-[#490101] px-6 py-3 text-[1.2rem] creamy border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all`"
+            className="bg-[#490101] px-6 py-3 text-[1.2rem] border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all"
+            onClick={() => (navigate('/contact'))}
           >
             Contact Us
           </button>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 import "swiper/css";
 
 
 export default function ProductsPage() {
 
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -90,7 +92,8 @@ export default function ProductsPage() {
 
                         <div className="flex justify-between items-center mt-4">
                           <span className="text-xl font-bold text-[#f8f3e9]">{product.price} DZD</span>
-                          <button className="px-4 py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-all hover:cursor-pointer">
+                          <button className="px-4 py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-all hover:cursor-pointer"
+                          onClick={()=> (navigate('/contact'))}>
                             Add to Cart
                           </button>
                         </div>
@@ -124,6 +127,7 @@ export default function ProductsPage() {
             border: '1px solid #f8f3e9'
           }}
           className="btn"
+          onClick={()=> (navigate('/contact'))}
         >
           Contact Us
         </Button>
