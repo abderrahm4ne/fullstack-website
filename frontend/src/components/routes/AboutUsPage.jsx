@@ -129,7 +129,7 @@ export default function AboutUsPage() {
             View Collection
           </button>
           <button 
-            className="bg-[#490101] px-6 py-3 text-[1.2rem] creamy border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all"
+            className="bg-[#490101] px-6 py-3 text-[1.2rem] creamy border-1 border-[#f8f3e9] rounded hover:bg-[#f8f3e9] hover:cursor-pointer hover:text-[#490101] transition-all`"
           >
             Contact Us
           </button>
