@@ -55,9 +55,37 @@ export default function OrderPage() {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
-  const handleSubmitOrder = (e) => {
+  const handleSubmitOrder = async (e) => {
     e.preventDefault();
-    // bakcend
+  
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/order`, {
+      customer: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city
+      },
+      items: cart.map(item => ({
+        productId: item._id,
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price
+      })),
+      total: calculateTotal(),
+      paymentMethod: "Cash on Delivery"
+    });
+
+    console.log("✅ Order response:", response.data);
+    setOrderComplete(true);
+    localStorage.removeItem("cart");
+    setCart([]);
+
+  } catch (error) {
+    console.error("Error placing order:", error.response?.data || error.message);
+    alert("Failed to place order. Please try again.");
+  }
   }
 
 

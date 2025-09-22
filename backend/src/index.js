@@ -5,6 +5,7 @@ import helmet from 'helmet'
 import userRoutes from '../src/routes/userRoutes.js'
 import productRoutes from '../src/routes/productRoutes.js'
 import mongoConnection from '../src/db/mongo.js'
+import orderRoutes from '../src/routes/orderRoutes.js'
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api', productRoutes);
+app.use('api', orderRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

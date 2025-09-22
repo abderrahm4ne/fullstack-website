@@ -6,7 +6,6 @@ import "swiper/css";
 
 
 export default function ProductsPage() {
-
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
