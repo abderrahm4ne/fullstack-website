@@ -57,7 +57,7 @@ export default function NavBar() {
         <div className="sm:hidden bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black border-b flex flex-col ">
           <NavLink to="" className="font-bold ham-menu text-center font-routes creamy text-[1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>HOME</NavLink>
           <NavLink to="products" className="font-bold ham-menu text-center font-routes creamy text-[1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>PRODUCTS</NavLink>
-          <NavLink to="about" className="font-bold ham-menu text-center font-routes creamy text-[1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>ABOUT US</NavLink>
+          <NavLink to="about-us" className="font-bold ham-menu text-center font-routes creamy text-[1rem] py-3 border-b w-full" onClick={() => setMenuOpen(false)}>ABOUT US</NavLink>
           <NavLink to="contact" className="font-bold ham-menu text-center font-routes creamy text-[1rem] py-3 w-full" onClick={() => setMenuOpen(false)}>CONTACT</NavLink>
         </div>
       )}

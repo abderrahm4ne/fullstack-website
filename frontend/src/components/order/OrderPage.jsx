@@ -31,8 +31,33 @@ export default function OrderPage() {
     });
   };
 
-  const handleSubmitOrder = () => {
-    
+  const updateQuantity = (id, newQuantity) => {
+
+    if(newQuantity < 1) {
+      removeItem(id);
+      return
+    }
+
+    const updatedCart = cart.map(item => item._id === id ? {...item, quantity: newQuantity} : item)
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart))
+
+  }
+
+  const removeItem = (id) => {
+
+    const updatedCart = cart.filter(item => item._id != id)
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart))
+  }
+
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
+
+  const handleSubmitOrder = (e) => {
+    e.preventDefault();
+    // bakcend
   }
 
 
@@ -81,7 +106,7 @@ export default function OrderPage() {
         <div className="lg:w-2/5">
           <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
             <h3 className="text-2xl font-semibold creamy mb-6">Order Summary</h3>
-            
+
             {cart.length === 0 ? (
               <div className="text-center py-10">
                 <p className="text-gray-300 text-xl mb-6">Your cart is empty</p>
@@ -103,33 +128,43 @@ export default function OrderPage() {
               <>
                 <div className="space-y-6 mb-8">
                   {cart.map(item => (
-                    <div key={item.id} className="flex items-center border-b border-gray-700 pb-4">
-                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-                      <div className="ml-4 flex-1">
-                        <h4 className="text-lg font-medium creamy">{item.name}</h4>
-                        <p className="text-gray-300">{item.price.toLocaleString()} DZD</p>
+                    <div key={item._id} className="flex flex-row items-center border-b border-gray-700 pb-4">
+                      <img src={item.image} alt={item.name} className="w-30 bg-amber-300 h-30 object-cover rounded-lg" />
+
+                      <div className="flex lg:flex-row flex-col  gap-3">
+
+                        <div className="ml-4 flex-1">
+                          <h4 className="lg:text-2xl text-lg font-medium creamy">{item.name}</h4>
+                          <p className="text-gray-300 lg:text-xl text-sm">{item.price.toLocaleString()} DZD</p>
+                        </div>
+
+                        <div className="flex items-center ">
+
+                          <button 
+                            className="px-3.5 py-3 rounded-3xl bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:cursor-pointer btn"
+                            onClick={() => {updateQuantity(item._id, item.quantity - 1)}}
+                          >
+                            <i className="fas fa-minus "></i>
+                          </button>
+
+                          <span className="mx-3 w-8 text-xl text-center">{item.quantity}</span>
+
+                          <button 
+                            className="px-3.5 py-3 rounded-3xl bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:cursor-pointer btn"
+                            onClick={() => {updateQuantity(item._id, item.quantity + 1)}}
+                          >
+                            <i className="fas fa-plus "></i>
+                          </button>
+                          <button 
+                            className="px-3.5 py-3 ml-3 text-xl flex items-center text-red-500 hover:text-red-400 hover:cursor-pointer btn"
+                            onClick={() => { removeItem(item._id)}}
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </div>
+
                       </div>
-                      <div className="flex items-center">
-                        <button 
-                          className="w-8 h-8 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9]"
-                          onClick={() => {}}
-                        >
-                          <i className="fas fa-minus text-sm"></i>
-                        </button>
-                        <span className="mx-3 w-8 text-center">{item.quantity}</span>
-                        <button 
-                          className="w-8 h-8 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9]"
-                          onClick={() => {}}
-                        >
-                          <i className="fas fa-plus text-sm"></i>
-                        </button>
-                        <button 
-                          className="ml-4 text-red-500 hover:text-red-400"
-                          onClick={() => {}}
-                        >
-                          <i className="fas fa-trash"></i>
-                        </button>
-                      </div>
+                      
                     </div>
                   ))}
                 </div>
@@ -137,15 +172,15 @@ export default function OrderPage() {
                 <div className="border-t border-gray-700 pt-4">
                   <div className="flex justify-between text-lg mb-2">
                     <span>Subtotal:</span>
-                    <span>function calculate total DZD</span>
+                    <span>{calculateTotal().toLocaleString()} DZD</span>
                   </div>
                   <div className="flex justify-between text-lg mb-2">
                     <span>Shipping:</span>
-                    <span>500 DZD</span>
+                    <span>depends on place DZD</span>
                   </div>
                   <div className="flex justify-between text-xl font-bold mt-4 pt-4 border-t border-gray-700">
                     <span>Total:</span>
-                    <span>function calculate total DZD</span>
+                    <span>{calculateTotal().toLocaleString()} DZD</span>
                   </div>
                 </div>
               </>
@@ -221,7 +256,9 @@ export default function OrderPage() {
                   }}
                 />
               </div>
-              
+
+              <div className="grid grid-cols-1 gap-4 mb-8">
+                                
               <TextField
                 label="Address"
                 name="address"
@@ -238,7 +275,7 @@ export default function OrderPage() {
                 }}
               />
               
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+
                 <TextField
                   label="City"
                   name="city"
@@ -276,8 +313,7 @@ export default function OrderPage() {
         </div>
       </div>
 
-      {/* Font Awesome for icons */}
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      
     </div>
   );
 }

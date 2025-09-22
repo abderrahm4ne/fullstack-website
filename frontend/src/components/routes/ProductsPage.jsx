@@ -92,7 +92,7 @@ export default function ProductsPage() {
             (Array.isArray(products) && products
             .filter(product => selectedCategory === "all" || product.category === selectedCategory)
             .map(product => (
-                      <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
+                      <div key={product._id} className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
                       <img
                         src={product.image}
                         alt={product.name}
