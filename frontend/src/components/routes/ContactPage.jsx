@@ -8,6 +8,7 @@ import {
   LocationOn, 
   Schedule 
 } from "@mui/icons-material";
+import axios from 'axios'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -24,10 +25,18 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // backend
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/send-message`, formData, 
+        {headers: {
+          "Content-Type": "application/json"
+        }}
+      )
+    } catch (err){
+      console.log({message: 'error occured', err: err.message})
+    }
 
     setFormData({
       name: "",

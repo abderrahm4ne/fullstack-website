@@ -6,6 +6,7 @@ import userRoutes from '../src/routes/userRoutes.js'
 import productRoutes from '../src/routes/productRoutes.js'
 import mongoConnection from '../src/db/mongo.js'
 import orderRoutes from '../src/routes/orderRoutes.js'
+import contactRoutes from '../src/routes/contactRoutes.js'
 
 dotenv.config()
 
@@ -22,7 +23,8 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api', productRoutes);
-app.use('api', orderRoutes);
+app.use('/api', orderRoutes);
+app.use('/api', contactRoutes)
 
 app.get('/', (req, res) => {
     res.send('API is running...');
