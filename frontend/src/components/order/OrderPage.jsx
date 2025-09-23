@@ -129,10 +129,10 @@ export default function OrderPage() {
         <p className="text-center text-gray-300">Review your order and complete your purchase</p>
       </div>
 
-      <div className="container mx-auto px-6 flex flex-col lg:flex-row gap-10">
+      <div className="container mx-auto px-4 sm:px-6 flex flex-col xl:flex-row gap-8">
         {/* Order Summary */}
-        <div className="lg:w-2/5">
-          <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
+        <div className="xl:w-2/3">
+          <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-4 sm:p-6 shadow-lg border border-[#f8f3e9]">
             <h3 className="text-2xl font-semibold creamy mb-6">Order Summary</h3>
 
             {cart.length === 0 ? (
@@ -156,57 +156,70 @@ export default function OrderPage() {
               <>
                 <div className="space-y-6 mb-8">
                   {cart.map(item => (
-                    <div key={item._id} className="flex flex-row items-center border-b border-gray-700 pb-4">
-                      <img src={item.image} alt={item.name} className="w-30 bg-amber-300 h-30 object-cover rounded-lg" />
+                    <div key={item._id} className="flex flex-col sm:flex-row items-start sm:items-center pb-4">
+                      {/* Product Image */}
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-lg flex-shrink-0" 
+                      />
 
-                      <div className="flex lg:flex-row flex-col  gap-3">
+                      {/* Product Info and Controls */}
+                      <div className="flex-1 w-full">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                          {/* Product Details */}
+                          <div className="flex-1">
+                            <h4 className="text-lg sm:text-xl md:text-2xl font-medium creamy mb-1">{item.name}</h4>
+                            <p className="text-gray-300 text-sm sm:text-base md:text-lg">{item.price.toLocaleString()} DZD</p>
+                          </div>
 
-                        <div className="ml-4 flex-1">
-                          <h4 className="lg:text-2xl text-lg font-medium creamy">{item.name}</h4>
-                          <p className="text-gray-300 lg:text-xl text-sm">{item.price.toLocaleString()} DZD</p>
+                          {/* Quantity Controls */}
+                          <div className="flex items-center justify-between md:justify-end gap-3">
+                            <div className="flex items-center gap-2">
+                              <button 
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#2c0101] transition-colors hover:cursor-pointer btn"
+                                onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                                aria-label="Decrease quantity"
+                              >
+                                <i className="fas fa-minus text-xs sm:text-sm"></i>
+                              </button>
+                              
+                              <span className="mx-2 w-6 text-center text-lg font-medium">{item.quantity}</span>
+                              
+                              <button 
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#2c0101] transition-colors hover:cursor-pointer btn"
+                                onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                                aria-label="Increase quantity"
+                              >
+                                <i className="fas fa-plus text-xs sm:text-sm"></i>
+                              </button>
+                            </div>
+                            
+                            <button 
+                              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors ml-2 hover:cursor-pointer btn"
+                              onClick={() => removeItem(item._id)}
+                              aria-label="Remove item"
+                            >
+                              <i className="fas fa-trash text-xs sm:text-sm"></i>
+                            </button>
+                          </div>
                         </div>
-
-                        <div className="flex items-center ">
-
-                          <button 
-                            className="px-3.5 py-3 rounded-3xl bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:cursor-pointer btn"
-                            onClick={() => {updateQuantity(item._id, item.quantity - 1)}}
-                          >
-                            <i className="fas fa-minus "></i>
-                          </button>
-
-                          <span className="mx-3 w-8 text-xl text-center">{item.quantity}</span>
-
-                          <button 
-                            className="px-3.5 py-3 rounded-3xl bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:cursor-pointer btn"
-                            onClick={() => {updateQuantity(item._id, item.quantity + 1)}}
-                          >
-                            <i className="fas fa-plus "></i>
-                          </button>
-                          <button 
-                            className="px-3.5 py-3 ml-3 text-xl flex items-center text-red-500 hover:text-red-400 hover:cursor-pointer btn"
-                            onClick={() => { removeItem(item._id)}}
-                          >
-                            <i className="fas fa-trash"></i>
-                          </button>
-                        </div>
-
                       </div>
-                      
                     </div>
                   ))}
                 </div>
                 
+                {/* Order Totals */}
                 <div className="border-t border-gray-700 pt-4">
-                  <div className="flex justify-between text-lg mb-2">
+                  <div className="flex justify-between text-base sm:text-lg mb-2">
                     <span>Subtotal:</span>
                     <span>{calculateTotal().toLocaleString()} DZD</span>
                   </div>
-                  <div className="flex justify-between text-lg mb-2">
+                  <div className="flex justify-between text-base sm:text-lg mb-2">
                     <span>Shipping:</span>
                     <span>depends on place DZD</span>
                   </div>
-                  <div className="flex justify-between text-xl font-bold mt-4 pt-4 border-t border-gray-700">
+                  <div className="flex justify-between text-lg sm:text-xl font-bold mt-4 pt-4 border-t border-gray-700">
                     <span>Total:</span>
                     <span>{calculateTotal().toLocaleString()} DZD</span>
                   </div>
@@ -217,12 +230,12 @@ export default function OrderPage() {
         </div>
 
         {/* Customer Information Form */}
-        <div className="lg:w-3/5">
-          <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
+        <div className="xl:w-1/3">
+          <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-4 sm:p-6 shadow-lg border border-[#f8f3e9] sticky top-6">
             <h3 className="text-2xl font-semibold creamy mb-6">Customer Information</h3>
             
             <form onSubmit={handleSubmitOrder}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <TextField
                   label="First Name"
                   name="firstName"
@@ -230,11 +243,13 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
+                  size="small"
                   InputLabelProps={{ style: { color: '#f8f3e9' } }}
                   inputProps={{ style: { color: 'white' } }}
                   sx={{ 
                     fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
                   }}
                 />
                 <TextField
@@ -244,16 +259,18 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
+                  size="small"
                   InputLabelProps={{ style: { color: '#f8f3e9' } }}
                   inputProps={{ style: { color: 'white' } }}
                   sx={{ 
                     fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
                   }}
                 />
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-1 gap-4 mb-6">
                 <TextField
                   label="Email"
                   name="email"
@@ -262,11 +279,13 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
+                  size="small"
                   InputLabelProps={{ style: { color: '#f8f3e9' } }}
                   inputProps={{ style: { color: 'white' } }}
                   sx={{ 
                     fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
                   }}
                 />
                 <TextField
@@ -276,34 +295,37 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
+                  size="small"
                   InputLabelProps={{ style: { color: '#f8f3e9' } }}
                   inputProps={{ style: { color: 'white' } }}
                   sx={{ 
                     fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
+                  }}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 mb-6">
+                <TextField
+                  label="Address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  size="small"
+                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
+                  inputProps={{ style: { color: 'white' } }}
+                  sx={{ 
+                    fieldset: { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
                   }}
                 />
               </div>
 
               <div className="grid grid-cols-1 gap-4 mb-8">
-                                
-              <TextField
-                label="Address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                className="mb-6"
-                InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                inputProps={{ style: { color: 'white' } }}
-                sx={{ 
-                  fieldset: { borderColor: "#f8f3e9" },
-                  "&:hover fieldset": { borderColor: "#d4af37 !important" }
-                }}
-              />
-              
-
                 <TextField
                   label="City"
                   name="city"
@@ -311,11 +333,13 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
+                  size="small"
                   InputLabelProps={{ style: { color: '#f8f3e9' } }}
                   inputProps={{ style: { color: 'white' } }}
                   sx={{ 
                     fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
                   }}
                 />
               </div>
@@ -329,9 +353,10 @@ export default function OrderPage() {
                   backgroundColor: cart.length === 0 ? '#555' : '#2c0101', 
                   color: '#f8f3e9',
                   border: '1px solid #f8f3e9',
-                  padding: '15px', 
-                  fontSize: '1.1rem',
-                  textTransform: 'none'
+                  padding: '12px', 
+                  fontSize: '1rem',
+                  textTransform: 'none',
+                  marginTop: '1rem'
                 }}
               >
                 Complete Purchase
@@ -341,7 +366,7 @@ export default function OrderPage() {
         </div>
       </div>
 
-      
+                
     </div>
   );
 }
