@@ -34,6 +34,7 @@ export default function ContactPage() {
           "Content-Type": "application/json"
         }}
       )
+      console.log(response);
     } catch (err){
       console.log({message: 'error occured', err: err.message})
     }
