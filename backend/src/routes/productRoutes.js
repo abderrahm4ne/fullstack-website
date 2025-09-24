@@ -9,10 +9,34 @@ router.get('/products',  async (req, res) => {
     try {
         const products = await Product.find();
         res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
     }
 })
+
+router.get('/products/:slug', async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", err: err.message });
+  }
+});
+
+router.get("/products/category/:category", async (req, res) => {
+  try {
+    const products = await Product.find({ category: req.params.category });
+    if (!products.length) {
+      return res.status(404).json({ message: "No products found in this category" });
+    }
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", err: err.message });
+  }
+});
 
 router.post('/admin/add/product', adminAuthentication, async (req, res) => {
     const { name, description, price, category, image, stock } = req.body;
@@ -30,8 +54,8 @@ router.post('/admin/add/product', adminAuthentication, async (req, res) => {
         await product.save();
 
         res.status(201).json({ message: 'Product added successfully', product });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
     }
 })
 
@@ -54,8 +78,8 @@ router.post('/admin/update/product/:id', adminAuthentication, async (req, res) =
         }
 
         res.status(200).json({ message: 'Product updated successfully', product });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
     }
 })
 
@@ -70,8 +94,8 @@ router.delete('/admin/delete/product/:id', adminAuthentication, async (req, res)
         }
 
         res.status(200).json({ message: 'Product deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
     }
 })
 
@@ -89,8 +113,8 @@ router.patch('/admin/assign-role', adminAuthentication, async (req, res) => {
         await user.save();
 
         res.status(200).json({ message: 'User role updated successfully', user: { id: user._id, email: user.email, role: user.role } });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
     }
 })
 

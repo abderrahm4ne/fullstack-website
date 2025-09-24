@@ -17,6 +17,7 @@ export default function ContactPage() {
     subject: "",
     message: ""
   });
+  const [inValid, setInValid] = useState({})
 
   const handleChange = (e) => {
     setFormData({
@@ -34,17 +35,19 @@ export default function ContactPage() {
           "Content-Type": "application/json"
         }}
       )
-      console.log(response);
-    } catch (err){
-      console.log({message: 'error occured', err: err.message})
-    }
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+      setInValid({});
 
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: ""
-    });
+      console.log('done with no errors');
+    } catch (err){
+      console.log({message: 'error occured', err: err.message});
+      setInValid(err.response.data.errors);
+    }
   };
 
   return (
@@ -79,6 +82,8 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    error={!!inValid.name}       
+                    helperText={inValid.name || ""}
                     InputLabelProps={{
                       style: { color: '#f8f3e9' }
                     }}
@@ -110,6 +115,8 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    error={!!inValid.email}
+                    helperText={inValid.email || ""}
                     InputLabelProps={{
                       style: { color: '#f8f3e9' }
                     }}
@@ -140,6 +147,8 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
+                    error={!!inValid.subject}
+                    helperText={inValid.subject || ""}
                     InputLabelProps={{
                       style: { color: '#f8f3e9' }
                     }}
@@ -172,6 +181,8 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    error={!!inValid.message}
+                    helperText={inValid.message || ""}
                     InputLabelProps={{
                       style: { color: '#f8f3e9' }
                     }}

@@ -5,6 +5,7 @@ import ProductsPage from './components/routes/ProductsPage';
 import AboutUsPage from './components/routes/AboutUsPage';
 import ContactPage from './components/routes/ContactPage';
 import OrderPage from './components/order/OrderPage'
+import ProductPage from './components/product/ProductPage';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Route path='' element={<NavBar />}>
         <Route index element={<HomePage />} />
         <Route path='products' element={<ProductsPage />} />
+        <Route path='products/:category/:slug' element={<ProductPage />} />
         <Route path='about-us' element={<AboutUsPage />} />
         <Route path='contact' element={<ContactPage />} />
         <Route path='CompleteYourOrder' element={<OrderPage />} />

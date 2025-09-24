@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
-import "swiper/css";
-
+import { NavLink } from "react-router-dom";
 
 export default function ProductsPage() {
   const navigate = useNavigate();
@@ -91,7 +90,7 @@ export default function ProductsPage() {
             (Array.isArray(products) && products
             .filter(product => selectedCategory === "all" || product.category === selectedCategory)
             .map(product => (
-                      <div key={product._id} className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
+                      <NavLink key={product._id} to={`/products/${product.category}/${product.slug}`} className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -104,7 +103,7 @@ export default function ProductsPage() {
                             {product.name} sadsad 
                           </h3>
                           <p className="text-gray-300 text-sm line-clamp-3">
-                            {product.description} zxczxc
+                            {product.description} zxczxc {product.category}
                           </p>
                         </div>
 
@@ -116,7 +115,7 @@ export default function ProductsPage() {
                           </button>
                         </div>
                       </div>
-                      </div>
+                      </NavLink>
                       )))
           }
           
