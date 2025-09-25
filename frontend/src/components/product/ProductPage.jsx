@@ -121,11 +121,11 @@ export default function ProductPage() {
     );
   }
 
-  // Create images array - use product.image as single image or product.images if available
   const productImages = product.images && product.images.length > 0 ? product.images : [product.image];
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black text-white pb-20">
+
       {/* Breadcrumb */}
       <div className="container mx-auto px-6 pt-10">
         <nav className="text-sm text-gray-400 mb-6">
@@ -150,6 +150,7 @@ export default function ProductPage() {
       {/* Product Details */}
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-10 mb-16">
+
           {/* Product Images */}
           <div className="lg:w-1/2">
             <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
@@ -184,11 +185,11 @@ export default function ProductPage() {
           {/* Product Info */}
           <div className="lg:w-1/2">
             <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
-              <h1 className="text-3xl md:text-4xl font-logo creamy mb-4">{product.name}</h1>
+              <h1 className="text-3xl md:text-4xl creamy mb-4">{product.name}</h1>
               
               <div className="flex items-center mb-6">
-                <span className="text-2xl font-bold text-creamy mr-4">{product.price} DZD</span>
-                {product.inStock ? (
+                <span className="text-xl font-bold text-creamy mr-4">{product.price} DZD</span>
+                {product.stock ? (
                   <span className="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">In Stock</span>
                 ) : (
                   <span className="bg-red-900 text-red-300 px-3 py-1 rounded-full text-sm">Out of Stock</span>
@@ -197,27 +198,12 @@ export default function ProductPage() {
 
               <p className="text-gray-300 mb-6">{product.description}</p>
 
-              {/* Features - Only show if features exist */}
-              {product.features && product.features.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-xl creamy mb-3">Features</h3>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {product.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-gray-300">
-                        <i className="fas fa-check text-green-500 mr-2"></i>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
               {/* Quantity Selector */}
               <div className="flex items-center mb-6">
-                <span className="mr-4 creamy">Quantity:</span>
+                <span className="mr-4 text-xl creamy">Quantity:</span>
                 <div className="flex items-center border border-[#f8f3e9] rounded-full">
                   <button 
-                    className="w-10 h-10 flex items-center justify-center text-creamy hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-colors rounded-l-full"
+                    className="w-10 h-10 flex items-center justify-center text-creamy hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-colors rounded-l-full hover:cursor-pointer"
                     onClick={decrementQuantity}
                     disabled={quantity <= 1}
                   >
@@ -225,7 +211,7 @@ export default function ProductPage() {
                   </button>
                   <span className="w-12 text-center text-lg">{quantity}</span>
                   <button 
-                    className="w-10 h-10 flex items-center justify-center text-creamy hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-colors rounded-r-full"
+                    className="w-10 h-10 flex items-center justify-center text-creamy hover:bg-[#f8f3e9] hover:text-[#2c0101] transition-colors rounded-r-full hover:cursor-pointer"
                     onClick={incrementQuantity}
                   >
                     <i className="fas fa-plus"></i>
@@ -237,19 +223,20 @@ export default function ProductPage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   variant="contained"
-                  disabled={!product.inStock}
+                  disabled={!product.stock}
                   onClick={() => addToCart(product, quantity)}
                   style={{ 
-                    backgroundColor: product.inStock ? '#2c0101' : '#555', 
+                    backgroundColor: product.stock ? '#750202' : '#333232', 
                     color: '#f8f3e9',
                     border: '1px solid #f8f3e9',
                     padding: '12px 24px', 
                     fontSize: '1.1rem',
                     textTransform: 'none',
-                    flex: 1
+                    flex: 1,
+                    cursor: "pointer"
                   }}
                 >
-                  {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                  {product.stock ? 'Add to Cart' : 'Out of Stock'}
                 </Button>
                 
                 <Button 
@@ -257,6 +244,7 @@ export default function ProductPage() {
                   onClick={() => navigate('/contact')}
                   style={{ 
                     color: '#f8f3e9',
+                    backgroundColor: "#333232",
                     border: '1px solid #f8f3e9',
                     padding: '12px 24px', 
                     fontSize: '1.1rem',
@@ -274,7 +262,7 @@ export default function ProductPage() {
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div className="mb-16">
-            <h2 className="text-3xl font-logo creamy mb-8 text-center">Related Products</h2>
+            <h2 className="text-5xl font-logo creamy mb-8 text-center">Related Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedProducts.map(relatedProduct => (
                 <div 
@@ -320,8 +308,6 @@ export default function ProductPage() {
         </Alert>
       </Snackbar>
 
-      {/* Font Awesome for icons */}
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     </div>
   );
 }
