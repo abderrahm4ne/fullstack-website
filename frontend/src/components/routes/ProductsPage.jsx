@@ -90,32 +90,35 @@ export default function ProductsPage() {
             (Array.isArray(products) && products
             .filter(product => selectedCategory === "all" || product.category === selectedCategory)
             .map(product => (
-                      <NavLink key={product._id} to={`/products/${product.category}/${product.slug}`} className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500"
-                      />
+                      <div className="w-full h-full flex flex-col gap-1">
+                        <NavLink key={product._id} to={`/products/${product.category}/${product.slug}`} className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group border-1 border-[#f8f3e9]">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        />
 
-                      <div className="p-6 flex flex-col justify-between h-56">
-                        <div>
-                          <h3 className="text-2xl font-semibold creamy mb-2 group-hover:text-[#f8f3e9] transition-colors">
-                            {product.name} sadsad 
-                          </h3>
-                          <p className="text-gray-300 text-sm line-clamp-3">
-                            {product.description} zxczxc {product.category}
-                          </p>
+                        <div className="p-6 flex flex-col justify-between h-56">
+                          <div>
+                            <h3 className="text-2xl font-semibold creamy mb-2 group-hover:text-[#f8f3e9] transition-colors">
+                              {product.name} sadsad 
+                            </h3>
+                            <p className="text-gray-300 text-sm line-clamp-3">
+                              {product.description} zxczxc {product.category}
+                            </p>
+                          </div>
+
+                          <div className="flex justify-between items-center mt-4">
+                            <span className="text-xl font-bold text-[#f8f3e9]">{product.price} DZD</span>
+                            
+                          </div>
                         </div>
-
-                        <div className="flex justify-between items-center mt-4">
-                          <span className="text-xl font-bold text-[#f8f3e9]">{product.price} DZD</span>
-                          <button className="px-4 bg-[#490101] py-2 rounded-full border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#490101] transition-all hover:cursor-pointer"
+                        </NavLink>
+                        <button className="px-4 bg-[#490101] text-xl py-3 rounded-2xl border border-[#f8f3e9] text-[#f8f3e9] hover:bg-[#f8f3e9] hover:text-[#490101] transition-all hover:cursor-pointer"
                           onClick={()=> { addToCart(product)}}>
                             Add to Cart
                           </button>
-                        </div>
                       </div>
-                      </NavLink>
                       )))
           }
           

@@ -225,15 +225,18 @@ export default function ProductPage() {
                   variant="contained"
                   disabled={!product.stock}
                   onClick={() => addToCart(product, quantity)}
-                  style={{ 
-                    backgroundColor: product.stock ? '#750202' : '#333232', 
+                  sx={{
+                    backgroundColor: product.stock ? '#750202' : '#333232',
                     color: '#f8f3e9',
                     border: '1px solid #f8f3e9',
-                    padding: '12px 24px', 
+                    padding: '12px 24px',
                     fontSize: '1.1rem',
                     textTransform: 'none',
                     flex: 1,
-                    cursor: "pointer"
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: product.stock ? '#a50303' : '#444', // darker red or gray
+                    },
                   }}
                 >
                   {product.stock ? 'Add to Cart' : 'Out of Stock'}
@@ -242,14 +245,18 @@ export default function ProductPage() {
                 <Button 
                   variant="outlined"
                   onClick={() => navigate('/contact')}
-                  style={{ 
+                  sx={{ 
                     color: '#f8f3e9',
                     backgroundColor: "#333232",
                     border: '1px solid #f8f3e9',
                     padding: '12px 24px', 
                     fontSize: '1.1rem',
                     textTransform: 'none',
-                    flex: 1
+                    flex: 1,
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: '#4a4a4a',
+                    },
                   }}
                 >
                   Contact About Product
@@ -261,7 +268,7 @@ export default function ProductPage() {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mb-16">
+          <div className="mb-16 border-t-1 border-[#f8f3e9] pt-10">
             <h2 className="text-5xl font-logo creamy mb-8 text-center">Related Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedProducts.map(relatedProduct => (
