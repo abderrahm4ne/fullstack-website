@@ -17,26 +17,7 @@ export default function ProductPage() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [relatedProducts, setRelatedProducts] = useState([]);
-
-  const getCart = () => {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
-  };
-
-  const addToCart = (product, qty) => {
-    const cart = getCart();
-    const existing = cart.find(item => item._id === product._id);
-    
-    if (existing) {
-      existing.quantity += qty;
-    } else {
-      cart.push({ ...product, quantity: qty });
-    }
-    
-    localStorage.setItem("cart", JSON.stringify(cart));
-    showSnackbar(`${qty} ${product.name} added to cart!`, "success");
-  };
-
+  
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -69,6 +50,30 @@ export default function ProductPage() {
       fetchProduct();
     }
   }, [slug]);
+
+
+  const getCart = () => {
+    const cart = localStorage.getItem('cart');
+    return cart ? JSON.parse(cart) : [];
+  };
+
+  const addToCart = (product, qty) => {
+  if (product) {
+
+    const cart = getCart();
+    const existing = cart.find(item => item._id === product._id);
+    
+    if (existing) {
+      existing.quantity += qty;
+      setQuantity(qty);
+    } else {
+      cart.push({ ...product, quantity: qty });
+    }
+    
+    localStorage.setItem("cart", JSON.stringify(cart));
+    showSnackbar(`${qty} ${product.name} added to cart!`, "success");
+  }
+  };
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbarMessage(message);

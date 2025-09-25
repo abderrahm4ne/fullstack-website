@@ -3,6 +3,8 @@ import Button from "@mui/material/Button";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function ProductsPage() {
   const navigate = useNavigate();
@@ -11,6 +13,9 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,9 +51,20 @@ export default function ProductsPage() {
     else {
       cart.push({ ...product, quantity: product.quantity || 1 });
     }
-    localStorage.setItem("cart", JSON.stringify(cart))
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+    showSnackbar(`${product.name} added to cart!`, "success");
   }
+
+  const showSnackbar = (message, severity = "success") => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setSnackbarOpen(true);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black text-white pb-20">
@@ -152,6 +168,18 @@ export default function ProductsPage() {
           Contact Us
         </Button>
       </div>
+
+      {/* Snackbar for notifications */}
+            <Snackbar 
+              open={snackbarOpen} 
+              autoHideDuration={3000} 
+              onClose={handleCloseSnackbar}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+              <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                {snackbarMessage}
+              </Alert>
+            </Snackbar>
 
     </div>
   );
