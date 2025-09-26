@@ -156,7 +156,7 @@ export default function OrderPage() {
               <>
                 <div className="space-y-6 mb-8">
                   {cart.map(item => (
-                    <div key={item._id} className="flex flex-col sm:flex-row items-start sm:items-center pb-4">
+                    <div key={item._id} className="flex flex-col sm:flex-row items-start sm:items-center pb-4 border-1 border-[#f8f3e9] rounded-xl px-4 py-2">
                       {/* Product Image */}
                       <img 
                         src={item.image} 
@@ -177,30 +177,30 @@ export default function OrderPage() {
                           <div className="flex items-center justify-between md:justify-end gap-3">
                             <div className="flex items-center gap-2">
                               <button 
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#2c0101] transition-colors hover:cursor-pointer btn"
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#f8f3e9] transition-colors hover:cursor-pointer hover:border-[#1a1a1a] hover:text-[#1a1a1a]"
                                 onClick={() => updateQuantity(item._id, item.quantity - 1)}
                                 aria-label="Decrease quantity"
                               >
-                                <i className="fas fa-minus text-xs sm:text-sm"></i>
+                                <i className="fas fa-minus text-xs sm:text-sm mt-1"></i>
                               </button>
                               
                               <span className="mx-2 w-6 text-center text-lg font-medium">{item.quantity}</span>
                               
                               <button 
-                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#2c0101] transition-colors hover:cursor-pointer btn"
+                                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#f8f3e9] hover:bg-[#f8f3e9] transition-colors hover:cursor-pointer hover:border-[#1a1a1a] hover:text-[#1a1a1a]"
                                 onClick={() => updateQuantity(item._id, item.quantity + 1)}
                                 aria-label="Increase quantity"
                               >
-                                <i className="fas fa-plus text-xs sm:text-sm"></i>
+                                <i className="fas fa-plus text-xs sm:text-sm mt-1"></i>
                               </button>
                             </div>
                             
                             <button 
-                              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors ml-2 hover:cursor-pointer btn"
+                              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors ml-2 hover:cursor-pointer "
                               onClick={() => removeItem(item._id)}
                               aria-label="Remove item"
                             >
-                              <i className="fas fa-trash text-xs sm:text-sm"></i>
+                              <i className="fas fa-trash text-xs sm:text-sm mt-1"></i>
                             </button>
                           </div>
                         </div>
