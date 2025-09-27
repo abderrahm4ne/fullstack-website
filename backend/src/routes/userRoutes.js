@@ -44,7 +44,7 @@ router.post('/register', validateUser, async (req, res) => {
 
 });
 
-router.post('/login', async (req, res) => {
+router.post('/admin/login', async (req, res) => {
     const { email, password } = req.body;
     
     try{
@@ -64,7 +64,14 @@ router.post('/login', async (req, res) => {
             { id: user._id, email: user.email, role: user.role },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
-        )
+        );
+
+        res.cookie("adminToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 60 * 60 * 1000
+        });
 
         res.status(200).json({ message : 'Login successful', token: token})
     } catch (error) {

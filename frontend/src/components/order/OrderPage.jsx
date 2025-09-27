@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function OrderPage() {
   const navigate = useNavigate();
@@ -96,8 +97,8 @@ export default function OrderPage() {
           <div className="text-6xl text-green-400 mb-6">
             <i className="fas fa-check-circle"></i>
           </div>
-          <h2 className="text-3xl font-logo creamy mb-4">Order Confirmed!</h2>
-          <p className="text-gray-300 mb-6">
+          <h2 className="text-5xl font-logo creamy mb-4">Order Confirmed!</h2>
+          <p className="text-gray-300 mb-6 text-2xl">
             Thank you for your purchase. We've sent a confirmation email to {formData.email}.
           </p>
           <Button 
@@ -233,9 +234,9 @@ export default function OrderPage() {
         <div className="xl:w-1/3">
           <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-4 sm:p-6 shadow-lg border border-[#f8f3e9] sticky top-6">
             <h3 className="text-2xl font-semibold creamy mb-6">Customer Information</h3>
-            
-            <form onSubmit={handleSubmitOrder}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <form onSubmit={handleSubmitOrder} className="space-y-8">
+              {/* First & Last Name */}
+              <div className="grid grid-cols-1 gap-8">
                 <TextField
                   label="First Name"
                   name="firstName"
@@ -243,13 +244,15 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
                 <TextField
@@ -259,18 +262,21 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
               </div>
-              
-              <div className="grid grid-cols-1 gap-4 mb-6">
+
+              {/* Email & Phone */}
+              <div className="grid grid-cols-1 gap-8">
                 <TextField
                   label="Email"
                   name="email"
@@ -279,13 +285,15 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
                 <TextField
@@ -295,68 +303,77 @@ export default function OrderPage() {
                   onChange={handleInputChange}
                   required
                   fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
               </div>
 
-              <div className="grid grid-cols-1 gap-4 mb-6">
-                <TextField
-                  label="Address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
+              <div className="grid grid-cols-1 gap-8">
+
+              {/* Address */}
+              <TextField
+                label="Address"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
                     "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
-                  }}
-                />
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
+
+              {/* City */}
+              <TextField
+                label="City"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
               </div>
 
-              <div className="grid grid-cols-1 gap-4 mb-8">
-                <TextField
-                  label="City"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  size="small"
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
-                  sx={{ 
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                    "& .Mui-focused fieldset": { borderColor: "#d4af37 !important" }
-                  }}
-                />
-              </div>
-              
-              <Button 
+              {/* Submit */}
+              <Button
                 type="submit"
-                variant="contained" 
+                variant="contained"
                 disabled={cart.length === 0}
                 fullWidth
-                style={{ 
-                  backgroundColor: cart.length === 0 ? '#555' : '#2c0101', 
+                style={{
+                  backgroundColor: cart.length === 0 ? '#555' : '#750202',
                   color: '#f8f3e9',
                   border: '1px solid #f8f3e9',
-                  padding: '12px', 
-                  fontSize: '1rem',
+                  padding: '18px',
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
                   textTransform: 'none',
-                  marginTop: '1rem'
+                  borderRadius: '10px',
                 }}
               >
                 Complete Purchase

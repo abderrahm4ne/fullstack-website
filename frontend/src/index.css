@@ -10,6 +10,15 @@
     color: black;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px #1a1a1a inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+}
+
+
 
 .bg-primary { background-color: #f5f5e2; }
 .bg-secondary { background-color: #f0e6d2; }
