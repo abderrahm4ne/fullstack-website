@@ -68,16 +68,44 @@ router.post('/admin/login', async (req, res) => {
 
         res.cookie("adminToken", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
         maxAge: 60 * 60 * 1000
         });
 
         res.status(200).json({ message : 'Login successful', token: token})
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error', err: error.message });
+        if (err.response) {
+            console.error("Error status:", err.response.status);
+            console.error("Error data:", err.response.data);
+        } else if (err.request) {
+            console.error("No response:", err.request);
+        } else {
+            console.error("Error message:", err.message);
+  }
     }
 })
+
+router.get('/admin/verify', (req, res) => {
+  const token = req.cookies.adminToken;
+
+  if (!token) {
+    return res.status(401).json({ valid: false, message: 'No token' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded.role !== 'admin') {
+      return res.status(403).json({ valid: false, message: 'Forbidden' });
+    }
+
+    res.json({ valid: true, role: decoded.role });
+  } catch (err) {
+    res.status(401).json({ valid: false, message: 'Invalid token' });
+  }
+});
+
 
 
 export default router;

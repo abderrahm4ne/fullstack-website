@@ -7,6 +7,7 @@ import productRoutes from '../src/routes/productRoutes.js'
 import mongoConnection from '../src/db/mongo.js'
 import orderRoutes from '../src/routes/orderRoutes.js'
 import contactRoutes from '../src/routes/contactRoutes.js'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -16,7 +17,9 @@ app.use(helmet());
 app.use(cors(
     {
         origin: "http://localhost:5173",
-        methods: ['GET', 'POST', 'PUT', 'DELETE']
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true,
+
     }
 ))
 app.use(express.json());
