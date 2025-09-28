@@ -9,6 +9,8 @@ import ProductPage from './components/product/ProductPage';
 import AdminLogin from './admin/auth/AdminLogin';
 import AdminDashboard from './admin/AdminDashboard';
 import ProtectedRoute from './admin/auth/ProtectedRoute';
+import AdminProductsPage from './admin/AdminProductsPage';
+import AdminContactsPage from './admin/AdminContactsPage';
 
 function App() {
   const router = createBrowserRouter(
@@ -24,10 +26,16 @@ function App() {
         </Route>
 
         <Route path='secret/admin' element={<AdminLogin />} />
+
         <Route path='secret/admin/dashboard' element={
           <ProtectedRoute>
             <AdminDashboard />
-          </ProtectedRoute>} />
+          </ProtectedRoute>} >
+
+          <Route index element={<AdminProductsPage />} />
+          <Route path='admin-contacts' element={<AdminContactsPage />} />
+
+        </Route>
       </>
     )
   );

@@ -78,7 +78,6 @@ export default function OrderPage() {
       paymentMethod: "Cash on Delivery"
     });
 
-    console.log("✅ Order response:", response.data);
     setOrderComplete(true);
     localStorage.removeItem("cart");
     setCart([]);

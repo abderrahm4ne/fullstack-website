@@ -1,29 +1,32 @@
 import { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+
 
 export default function AdminLogin() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    try{
-        const response = axios.post(`${import.meta.env.VITE_API_URL}/api/users/admin/login`, { formData}, { withCredentials: true })  
-        console.log('response: ', response);
-        console.log("Admin login:", formData);
-
-        if (response.status === 200) {
-            navigate("/secret/admin/dashboard");
-        }
-    } catch(err){
-        console.log('error occured', err);
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/admin/login`, formData, { withCredentials: true });
+      console.log(response.data.message);
+       navigate("/secret/admin/dashboard");
+    } catch (error) {
+      if (error.response) {
+        console.log("Error :", error.response);
+        console.log(error.response.data.message);
+      } else {
+        console.log('An error occurred. Please try again.');
+      }
     }
-
   };
 
   return (
@@ -37,31 +40,13 @@ export default function AdminLogin() {
         padding: "2rem",
       }}
     >
-      <Paper
-        elevation={6}
-        style={{
-          padding: "2.5rem",
-          maxWidth: 400,
-          width: "100%",
-          borderRadius: "16px",
-          background: "#1e1e1e",
-          border: "1px solid #d4af37",
-        }}
-      >
-        <Typography
-          variant="h5"
-          align="center"
-          gutterBottom
-          style={{ color: "#f8f3e9", fontWeight: "600" }}
-        >
-          Admin Login
-        </Typography>
 
         <form onSubmit={handleSubmit}>
             <TextField
               label="Email"
               type="email"
               name="email"
+              placeholder="email"
               value={formData.email}
               onChange={handleInputChange}
               required
@@ -80,6 +65,7 @@ export default function AdminLogin() {
               label="Password"
               type="password"
               name="password"
+              placeholder="password"
               value={formData.password}
               onChange={handleInputChange}
               required
@@ -110,7 +96,6 @@ export default function AdminLogin() {
             Login
           </Button>
         </form>
-      </Paper>
     </div>
   );
 }
