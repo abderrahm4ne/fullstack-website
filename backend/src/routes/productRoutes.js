@@ -59,7 +59,7 @@ router.post('/admin/add/product', adminAuthentication, async (req, res) => {
     }
 })
 
-router.post('/admin/update/product/:id', adminAuthentication, async (req, res) => {
+router.put('/admin/update/product/:id', adminAuthentication, async (req, res) => {
     const { id } = req.params;
     const { name, description, price, category, image, stock } = req.body;
 

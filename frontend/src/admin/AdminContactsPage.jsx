@@ -152,7 +152,7 @@ export default function AdminContactsPage() {
     <div className="min-h-screen bg-gradient-to-r from-[#1a1a1a] via-[#2c0101] to-black text-white pb-20">
       {/* Header */}
       <div className="container mx-auto px-6 pt-10">
-        <h1 className="text-4xl font-logo creamy mb-8">Admin Dashboard</h1>
+        <h1 className="text-4xl creamy mb-8">Admin Orders and Contacts</h1>
         
         {/* Tabs */}
         <div className="flex border-b border-gray-700 mb-6">
