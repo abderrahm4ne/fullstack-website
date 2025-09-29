@@ -57,3 +57,12 @@ input:-webkit-autofill:focus {
     transform: scale(1.02);
     cursor: pointer ;
 }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+td, th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

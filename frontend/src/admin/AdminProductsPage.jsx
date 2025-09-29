@@ -29,10 +29,6 @@ export default function AdminProductsPage() {
     features: [""]
   });
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -46,6 +42,10 @@ export default function AdminProductsPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbarMessage(message);
@@ -131,10 +131,10 @@ export default function AdminProductsPage() {
       };
 
       if (editingProduct) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/products/${editingProduct._id}`, productData);
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/update/product/${editingProduct._id}`, productData);
         showSnackbar("Product updated successfully!");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, productData);
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/add/product`, productData);
         showSnackbar("Product added successfully!");
       }
 
@@ -149,7 +149,7 @@ export default function AdminProductsPage() {
   const handleDelete = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${productId}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/delete/product/${productId}`);
         showSnackbar("Product deleted successfully!");
         fetchProducts();
       } catch (err) {
@@ -164,7 +164,7 @@ export default function AdminProductsPage() {
       {/* Header */}
       <div className="container mx-auto px-6 pt-10">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-logo creamy">Product Management</h1>
+          <h1 className="text-4xl creamy">Product Management</h1>
           <Button
             variant="contained"
             onClick={() => handleOpenDialog()}
@@ -207,7 +207,7 @@ export default function AdminProductsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-2xl">
                 <thead>
                   <tr className="border-b border-gray-700">
                     <th className="text-left p-4 creamy">Image</th>
@@ -220,35 +220,35 @@ export default function AdminProductsPage() {
                 </thead>
                 <tbody>
                   {products.map(product => (
-                    <tr key={product._id} className="border-b border-gray-800 hover:bg-[#3a0202]">
+                    <tr key={product._id} className="border-b border-gray-800 hover:bg-[#3a0202] hover:cursor-pointer">
                       <td className="p-4">
                         <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded" />
                       </td>
-                      <td className="p-4">{product.name}</td>
-                      <td className="p-4 capitalize">{product.category}</td>
-                      <td className="p-4">{product.price} DZD</td>
-                      <td className="p-4">
-                        <span className={`px-2 py-1 rounded-full text-xs ${
+                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.name}</td>
+                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.category}</td>
+                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.price} DZD</td>
+                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">
+                        <span className={`px-2 py-1 rounded-full text-md ${
                           product.inStock ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'
                         }`}>
                           {product.inStock ? 'In Stock' : 'Out of Stock'}
                         </span>
                       </td>
                       <td className="p-4">
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-6">
                           <button
                             onClick={() => handleOpenDialog(product)}
-                            className="text-blue-400 hover:text-blue-300"
+                            className="text-blue-400 hover:text-blue-300 hover:cursor-pointer"
                             title="Edit"
                           >
-                            <i className="fas fa-edit"></i>
+                            <i className="fas fa-edit text-3xl"></i>
                           </button>
                           <button
                             onClick={() => handleDelete(product._id)}
-                            className="text-red-400 hover:text-red-300"
+                            className="text-red-400 hover:text-red-300 hover:cursor-pointer"
                             title="Delete"
                           >
-                            <i className="fas fa-trash"></i>
+                            <i className="fas fa-trash text-3xl"></i>
                           </button>
                         </div>
                       </td>
@@ -268,131 +268,132 @@ export default function AdminProductsPage() {
             {editingProduct ? 'Edit Product' : 'Add New Product'}
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-              <TextField
-                label="Product Name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                inputProps={{ style: { color: 'white' } }}
-                sx={{
-                  fieldset: { borderColor: "#f8f3e9" },
-                  "&:hover fieldset": { borderColor: "#d4af37 !important" }
-                }}
-              />
+            <form onSubmit={handleSubmit} className="space-y-4 mt-4"> 
 
-              <TextField
-                label="Description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                multiline
-                rows={3}
-                InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                inputProps={{ style: { color: 'white' } }}
-                sx={{
-                  fieldset: { borderColor: "#f8f3e9" },
-                  "&:hover fieldset": { borderColor: "#d4af37 !important" }
-                }}
-              />
-
-              <div className="grid grid-cols-2 gap-4">
+              {/* name */}
+              <div className="grid grid-cols-1 gap-8">
                 <TextField
-                  label="Price (DZD)"
-                  name="price"
-                  type="number"
-                  value={formData.price}
+                  label="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleInputChange}
                   required
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
+                  fullWidth
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
                   sx={{
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
-
                 <TextField
-                  label="Category"
-                  name="category"
-                  value={formData.category}
+                  label="description"
+                  name="description"
+                  value={formData.description}
                   onChange={handleInputChange}
                   required
-                  InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                  inputProps={{ style: { color: 'white' } }}
+                  fullWidth
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
                   sx={{
-                    fieldset: { borderColor: "#f8f3e9" },
-                    "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
                   }}
                 />
               </div>
 
+              {/* price */}
+              <div className="grid grid-cols-1 gap-8">
+                <TextField
+                  label="price"
+                  name="price"
+                  type="price"
+                  value={formData.price}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
+                  }}
+                />
+                <TextField
+                  label="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "10px",
+                      "& fieldset": { borderColor: "#f8f3e9" },
+                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                    },
+                  }}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
+
+              {/* image */}
               <TextField
-                label="Image URL"
+                label="image"
                 name="image"
                 value={formData.image}
                 onChange={handleInputChange}
                 required
                 fullWidth
-                InputLabelProps={{ style: { color: '#f8f3e9' } }}
-                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
                 sx={{
-                  fieldset: { borderColor: "#f8f3e9" },
-                  "&:hover fieldset": { borderColor: "#d4af37 !important" }
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
                 }}
               />
 
-              <div>
-                <label className="block text-creamy mb-2">Features</label>
-                {formData.features.map((feature, index) => (
-                  <div key={index} className="flex gap-2 mb-2">
-                    <TextField
-                      value={feature}
-                      onChange={(e) => handleFeatureChange(index, e.target.value)}
-                      fullWidth
-                      placeholder={`Feature ${index + 1}`}
-                      InputProps={{ style: { color: 'white' } }}
-                      sx={{
-                        fieldset: { borderColor: "#f8f3e9" },
-                        "&:hover fieldset": { borderColor: "#d4af37 !important" }
-                      }}
-                    />
-                    {formData.features.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeFeatureField(index)}
-                        className="text-red-400 hover:text-red-300 px-3"
-                      >
-                        <i className="fas fa-times"></i>
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={addFeatureField}
-                  className="text-creamy hover:text-[#f8f3e9] mt-2"
-                >
-                  <i className="fas fa-plus mr-2"></i>Add Feature
-                </button>
+              {/* inStock */}
+              <TextField
+                label="inStock"
+                name="inStock"
+                value={formData.inStock}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
               </div>
 
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="inStock"
-                  name="inStock"
-                  checked={formData.inStock}
-                  onChange={(e) => setFormData({...formData, inStock: e.target.checked})}
-                  className="mr-2"
-                />
-                <label htmlFor="inStock" className="text-creamy">In Stock</label>
-              </div>
             </form>
           </DialogContent>
           <DialogActions>
