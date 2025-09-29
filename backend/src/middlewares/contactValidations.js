@@ -11,8 +11,8 @@ export default function validateContact(req, res, next) {
     errors.email = "A valid email is required";
   }
 
-  if (subject && subject.trim().length > 100) {
-    errors.subject = "Subject cannot be longer than 100 characters";
+  if (subject && subject.trim().length > 80) {
+    errors.subject = "Subject cannot be longer than 80 characters";
   }
 
   if (!message || message.trim().length < 5) {

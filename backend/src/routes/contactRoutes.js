@@ -1,6 +1,7 @@
 import express from 'express'
 import Contact from '../models/contact.js'
 import validateContact from '../middlewares/contactValidations.js'
+import adminAuthentication from '../middlewares/auth.js'
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ router.post('/send-message', validateContact, async (req, res) => {
         
 })
 
-router.get('/show-messages', async(req, res) => {
+router.get('/admin/show-messages', adminAuthentication, async(req, res) => {
     
     try{
         const contacts = await Contact.find();
