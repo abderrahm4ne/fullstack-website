@@ -16,7 +16,7 @@ router.post("/Order", async (req, res) => {
     }
 })
 
-router.get("/admin/Orders", adminAuthentication, async (req, res) => {
+router.get("/admin/show-orders", adminAuthentication, async (req, res) => {
     try{
         const orders = await Order.find().sort({ createAt: -1});
         res.json(orders);

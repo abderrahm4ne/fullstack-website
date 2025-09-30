@@ -25,8 +25,7 @@ export default function AdminProductsPage() {
     price: "",
     category: "",
     image: "",
-    inStock: true,
-    features: [""]
+    stock: "",
   });
 
   const fetchProducts = async () => {
@@ -66,8 +65,7 @@ export default function AdminProductsPage() {
         price: product.price,
         category: product.category,
         image: product.image,
-        inStock: product.inStock,
-        features: product.features || [""]
+        stock: product.stock,
       });
     } else {
       setEditingProduct(null);
@@ -77,8 +75,7 @@ export default function AdminProductsPage() {
         price: "",
         category: "",
         image: "",
-        inStock: true,
-        features: [""]
+        stock: ""
       });
     }
     setOpenDialog(true);
@@ -97,51 +94,32 @@ export default function AdminProductsPage() {
     });
   };
 
-  const handleFeatureChange = (index, value) => {
-    const newFeatures = [...formData.features];
-    newFeatures[index] = value;
-    setFormData({
-      ...formData,
-      features: newFeatures
-    });
-  };
-
-  const addFeatureField = () => {
-    setFormData({
-      ...formData,
-      features: [...formData.features, ""]
-    });
-  };
-
-  const removeFeatureField = (index) => {
-    const newFeatures = formData.features.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      features: newFeatures
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const productData = {
         ...formData,
-        price: parseInt(formData.price),
-        features: formData.features.filter(feature => feature.trim() !== "")
+        stock: parseInt(formData.stock),
+        price: parseInt(formData.price)
       };
 
       if (editingProduct) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/update/product/${editingProduct._id}`, productData);
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/update/product/${editingProduct._id}`, productData, {
+          withCredentials: true
+        });
         showSnackbar("Product updated successfully!");
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/add/product`, productData);
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/add/product`, productData, {
+          withCredentials: true
+        });
         showSnackbar("Product added successfully!");
       }
 
       handleCloseDialog();
       fetchProducts();
     } catch (err) {
-      console.error('Error saving product:', err);
+      console.error('Error saving product:', err.response);
       showSnackbar("Error saving product", "error");
     }
   };
@@ -149,7 +127,9 @@ export default function AdminProductsPage() {
   const handleDelete = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/delete/product/${productId}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/delete/product/${productId}`, {
+          withCredentials: true
+        });
         showSnackbar("Product deleted successfully!");
         fetchProducts();
       } catch (err) {
@@ -225,14 +205,14 @@ export default function AdminProductsPage() {
                       <td className="p-4">
                         <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded" />
                       </td>
-                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.name}</td>
-                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.category}</td>
-                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">{product.price} DZD</td>
-                      <td className="px-4 py-3 truncate overflow-hidden text-ellipsis capitalize">
+                      <td className="px-4 py-3 whitespace-normal break-words capitalize">{product.name}</td>
+                      <td className="px-4 py-3 whitespace-normal break-words capitalize">{product.category}</td>
+                      <td className="px-4 py-3 whitespace-normal break-words capitalize">{product.price} DZD</td>
+                      <td className="px-4 py-3 whitespace-normal break-words capitalize">
                         <span className={`px-2 py-1 rounded-full text-md ${
-                          product.inStock ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'
+                          product.stock > 0 ? 'bg-green-900 text-green-300' : 'bg-red-900 text-red-300'
                         }`}>
-                          {product.inStock ? 'In Stock' : 'Out of Stock'}
+                          {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
                         </span>
                       </td>
                       <td className="p-4">
@@ -374,11 +354,11 @@ export default function AdminProductsPage() {
                 }}
               />
 
-              {/* inStock */}
+              {/* stock */}
               <TextField
-                label="inStock"
-                name="inStock"
-                value={formData.inStock}
+                label="stock"
+                name="stock"
+                value={formData.stock}
                 onChange={handleInputChange}
                 required
                 fullWidth
