@@ -173,7 +173,8 @@ export default function AdminProductsPage() {
               color: '#f8f3e9',
               border: '1px solid #f8f3e9',
               padding: '10px 20px',
-              textTransform: 'none'
+              textTransform: 'none',
+              fontSize: '1.1rem'
             }}
           >
             <i className="fas fa-plus mr-2"></i>
