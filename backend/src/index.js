@@ -8,6 +8,7 @@ import mongoConnection from './db/mongo.js'
 import orderRoutes from './routes/orderRoutes.js'
 import contactRoutes from './routes/contactRoutes.js'
 import cookieParser from 'cookie-parser'
+import uploadRoutes from './routes/upload.js'
 
 dotenv.config()
 
@@ -27,8 +28,12 @@ app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
 app.use('/api', productRoutes);
+app.use('/api', uploadRoutes);
 app.use('/api', orderRoutes);
-app.use('/api', contactRoutes)
+app.use('/api', contactRoutes);
+
+
+app.use('/uploads', express.static('public/uploads'));
 
 app.get('/', (req, res) => {
     res.send('API is running...');

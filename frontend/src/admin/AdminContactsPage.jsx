@@ -20,60 +20,20 @@ export default function AdminContactsPage() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      // Fetch messages and orders from API
-      const messagesRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/messages`);
-      const ordersRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`);
-      
+
+      const messagesRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/show-messages`,
+        { withCredentials: true }
+      );
+      const ordersRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/show-orders`,
+        { withCredentials: true }
+      );
+
       setMessages(messagesRes.data);
       setOrders(ordersRes.data);
     } catch (err) {
       console.error('Error fetching data:', err);
       showSnackbar("Error loading data", "error");
       
-      // Mock data for demonstration
-      setMessages([
-        {
-          _id: 1,
-          name: "John Doe",
-          email: "john@example.com",
-          message: "I'm interested in the Classic Elegance watch. Do you have it in stock?",
-          createdAt: new Date().toISOString(),
-          read: false
-        },
-        {
-          _id: 2,
-          name: "Jane Smith",
-          email: "jane@example.com",
-          message: "When will the new collection be available?",
-          createdAt: new Date(Date.now() - 86400000).toISOString(),
-          read: true
-        }
-      ]);
-      
-      setOrders([
-        {
-          _id: 1,
-          orderNumber: "ORD-001",
-          customerName: "John Doe",
-          total: 24500,
-          status: "pending",
-          items: [
-            { name: "Classic Elegance", quantity: 1, price: 24500 }
-          ],
-          createdAt: new Date().toISOString()
-        },
-        {
-          _id: 2,
-          orderNumber: "ORD-002",
-          customerName: "Jane Smith",
-          total: 18900,
-          status: "completed",
-          items: [
-            { name: "Modern Chrono", quantity: 1, price: 18900 }
-          ],
-          createdAt: new Date(Date.now() - 172800000).toISOString()
-        }
-      ]);
     } finally {
       setLoading(false);
     }

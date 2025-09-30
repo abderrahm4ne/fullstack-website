@@ -8,6 +8,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "./firebase/config.js";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([]);
@@ -18,6 +20,9 @@ export default function AdminProductsPage() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -67,6 +72,7 @@ export default function AdminProductsPage() {
         image: product.image,
         stock: product.stock,
       });
+      setImagePreview(product.image);
     } else {
       setEditingProduct(null);
       setFormData({
@@ -77,6 +83,7 @@ export default function AdminProductsPage() {
         image: "",
         stock: ""
       });
+      setImagePreview("");
     }
     setOpenDialog(true);
   };
@@ -84,6 +91,9 @@ export default function AdminProductsPage() {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setEditingProduct(null);
+    setImagePreview("");
+    setUploading(false);
+    setUploadProgress(0);
   };
 
   const handleInputChange = (e) => {
@@ -94,8 +104,45 @@ export default function AdminProductsPage() {
     });
   };
 
+const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showSnackbar("Please select an image file", "error");
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    showSnackbar("Image size should be less than 5MB", "error");
+    return;
+  }
+
+  setUploading(true);
+
+  // logic to upload image to Firebase Storage
+};
+
+  const removeImage = () => {
+    setFormData(prev => ({
+      ...prev,
+      image: ""
+    }));
+    setImagePreview("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.name || !formData.description || !formData.price || !formData.category || !formData.stock) {
+      showSnackbar("Please fill in all required fields", "error");
+      return;
+    }
+
+    if (!formData.image) {
+      showSnackbar("Please upload a product image", "error");
+      return;
+    }
 
     try {
       const productData = {
@@ -244,106 +291,22 @@ export default function AdminProductsPage() {
 
       {/* Add/Edit Product Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
-        <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] text-white">
-          <DialogTitle className="creamy">
+        <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] text-white px-4 py-8">
+          <DialogTitle className="text-4xl creamy">
             {editingProduct ? 'Edit Product' : 'Add New Product'}
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4"> 
-
-              {/* name */}
-              <div className="grid grid-cols-1 gap-8">
-                <TextField
-                  label="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "10px",
-                      "& fieldset": { borderColor: "#f8f3e9" },
-                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
-                    },
-                  }}
-                />
-                <TextField
-                  label="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "10px",
-                      "& fieldset": { borderColor: "#f8f3e9" },
-                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
-                    },
-                  }}
-                />
-              </div>
-
-              {/* price */}
-              <div className="grid grid-cols-1 gap-8">
-                <TextField
-                  label="price"
-                  name="price"
-                  type="price"
-                  value={formData.price}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "10px",
-                      "& fieldset": { borderColor: "#f8f3e9" },
-                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
-                    },
-                  }}
-                />
-                <TextField
-                  label="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  required
-                  fullWidth
-                  InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                  inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "10px",
-                      "& fieldset": { borderColor: "#f8f3e9" },
-                      "&:hover fieldset": { borderColor: "#d4af37 !important" },
-                      "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
-                    },
-                  }}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 gap-8">
-
-              {/* image */}
+            <form onSubmit={handleSubmit} className="space-y-4 mt-4 flex flex-col gap-8">
+              {/* Name */}
               <TextField
-                label="image"
-                name="image"
-                value={formData.image}
+                label="Product Name"
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
                 required
                 fullWidth
                 InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.3rem', padding: '10px 14px' } }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
@@ -354,16 +317,139 @@ export default function AdminProductsPage() {
                 }}
               />
 
-              {/* stock */}
+              {/* Description */}
               <TextField
-                label="stock"
+                label="Description"
+                name="description"
+                multiline
+                rows={4}
+                value={formData.description}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.3rem', padding: '10px 14px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
+
+              {/* Price */}
+              <TextField
+                label="Price (DZD)"
+                name="price"
+                type="number"
+                value={formData.price}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.3rem', padding: '10px 14px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
+
+              {/* Category */}
+              <TextField
+                label="Category"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+                required
+                fullWidth
+                InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.3rem', padding: '10px 14px' } }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    "& fieldset": { borderColor: "#f8f3e9" },
+                    "&:hover fieldset": { borderColor: "#d4af37 !important" },
+                    "&.Mui-focused fieldset": { borderColor: "#d4af37 !important" },
+                  },
+                }}
+              />
+
+              {/* Image Upload Section */}
+              <div className="space-y-4">
+                <label className="block text-creamy text-2xl mb-2">Product Image</label>
+                
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div className="relative inline-block">
+                    <img 
+                      src={imagePreview} 
+                      alt="Preview" 
+                      className="w-32 h-32 object-cover rounded-lg border-2 border-creamy"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-700"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+
+                {/* File Upload */}
+                <div className="flex items-center gap-4">
+                  <label className="flex items-center gap-2 px-4 py-3 bg-[#2c0101] text-creamy border border-creamy rounded-lg cursor-pointer hover:bg-[#3a0202] transition-colors">
+                    <i className="fas fa-cloud-upload-alt"></i>
+                    {uploading ? "Uploading..." : "Choose Image"}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                      className="hidden"
+                    />
+                  </label>
+                  
+                  {uploading && (
+                    <div className="flex items-center gap-2 text-creamy">
+                      <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-creamy"></div>
+                      <span>Uploading... {Math.round(uploadProgress)}%</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Progress Bar */}
+                {uploading && uploadProgress > 0 && (
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${uploadProgress}%` }}
+                    ></div>
+                  </div>
+                )}
+
+                <p className="text-gray-400 text-sm">
+                  Supported formats: JPG, PNG, WebP. Max size: 5MB
+                </p>
+              </div>
+
+              {/* Stock */}
+              <TextField
+                label="Stock Quantity"
                 name="stock"
+                type="number"
                 value={formData.stock}
                 onChange={handleInputChange}
                 required
                 fullWidth
                 InputLabelProps={{ style: { color: '#f8f3e9', fontSize: '1.15rem' } }}
-                inputProps={{ style: { color: 'white', fontSize: '1.1rem', padding: '18px 16px' } }}
+                inputProps={{ style: { color: 'white', fontSize: '1.3rem', padding: '10px 14px' } }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
@@ -373,26 +459,35 @@ export default function AdminProductsPage() {
                   },
                 }}
               />
-              </div>
-
             </form>
           </DialogContent>
           <DialogActions>
             <Button
               onClick={handleCloseDialog}
-              style={{ color: '#f8f3e9' }}
+              style={{
+                backgroundColor: '#f8f3e9',
+                color: '#2c0101',
+                border: '1px solid #2c0101',
+                fontSize: '1.3rem',
+                width: '170px'
+              }}
+              className="btn"
             >
               Cancel
             </Button>
             <Button
               onClick={handleSubmit}
+              disabled={uploading || !formData.image}
               style={{
-                backgroundColor: '#2c0101',
+                backgroundColor: uploading || !formData.image ? '#555' : '#2c0101',
                 color: '#f8f3e9',
-                border: '1px solid #f8f3e9'
+                border: '1px solid #f8f3e9',
+                fontSize: '1.3rem',
+                width: '220px'
               }}
+              className="btn"
             >
-              {editingProduct ? 'Update' : 'Add'} Product
+              {uploading ? 'Uploading...' : editingProduct ? 'Update' : 'Add'} Product
             </Button>
           </DialogActions>
         </div>
