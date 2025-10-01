@@ -39,17 +39,34 @@ router.get("/products/category/:category", async (req, res) => {
 });
 
 router.post('/admin/add/product', adminAuthentication, async (req, res) => {
-    const { name, description, price, category, image, stock } = req.body;
+
 
     try {
+
+    const files = req.files?.images;
+    let imageUrls = [];
+    
+        if (Array.isArray(files)){
+            for (let file of files) {
+                const uploadRes = await cloudinary.uploader.upload(file.tempFilePath);
+                imageUrls.push(uploadRes.secure_url);
+            }
+        } else if (files) {
+            const uploadRes = await cloudinary.uploader.upload(files.tempFilePath);
+            imageUrls.push(uploadRes.secure_url);
+        }
+
+        const { name, description, price, category, stock } = req.body;
+
         const product = new Product({
-                name,
-                description,
-                price,
-                category,
-                image,
-                stock
+            name,
+            description,
+            price,
+            category,
+            image: imageUrls.length === 1 ? imageUrls[0] : imageUrls, 
+            stock
         });
+
 
         await product.save();
 
