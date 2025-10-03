@@ -20,6 +20,7 @@ export default function AdminProductsPage() {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
   const [uploading, setUploading] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
+  
 
   const [formData, setFormData] = useState({
     name: "",

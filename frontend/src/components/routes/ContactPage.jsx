@@ -315,7 +315,7 @@ export default function ContactPage() {
           {[
             {
               question: "How long does shipping take?",
-              answer: "We typically process orders within 1-2 business days. Standard shipping takes 3-5 business days within the US."
+              answer: "We typically process orders within 1 business day. Standard shipping takes 2-3 business days."
             },
             {
               question: "What is your return policy?",

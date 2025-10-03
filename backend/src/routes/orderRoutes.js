@@ -7,9 +7,11 @@ const router = express.Router();
 router.post("/Order", async (req, res) => {
     
     try{
-        const order = new Order(req.body);
-        await order.save();
-        res.status(201).json({ message: "Order Placed Successfully", order })
+      const orderCount = await Order.countDocuments();
+      const order = new Order(req.body);
+      order.orderNumber = `ORDER-${orderCount + 1}`;
+      await order.save();
+      res.status(201).json({ message: "Order Placed Successfully", order })
     }
     catch(err){
         res.status(400).json({message: "error occured", err: err.message})
