@@ -16,6 +16,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import TextField from "@mui/material/TextField";
 
 export default function AdminContactsPage() {
   const [messages, setMessages] = useState([]);
@@ -116,23 +117,10 @@ export default function AdminContactsPage() {
     setSnackbarOpen(false);
   };
 
-  const markAsRead = async (messageId) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}`, { read: true });
-      setMessages(messages.map(msg => 
-        msg._id === messageId ? { ...msg, read: true } : msg
-      ));
-      showSnackbar("Message marked as read");
-    } catch (err) {
-      console.error('Error updating message:', err);
-      showSnackbar("Error updating message", "error");
-    }
-  };
-
   const deleteMessage = async (messageId) => {
     if (window.confirm("Are you sure you want to delete this message?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/messages/${messageId}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/delete-message/${messageId}`, { withCredentials: true });
         setMessages(messages.filter(msg => msg._id !== messageId));
         showSnackbar("Message deleted successfully");
       } catch (err) {
@@ -144,7 +132,7 @@ export default function AdminContactsPage() {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}`, { status: newStatus });
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/orders/${orderId}`, { status: newStatus }, { withCredentials: true });
       setOrders(orders.map(order => 
         order._id === orderId ? { ...order, status: newStatus } : order
       ));
@@ -241,6 +229,7 @@ export default function AdminContactsPage() {
               <h2 className="text-3xl creamy">Customer Messages</h2>
               
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+
                 <FormControl
                   size="small"
                   sx={{
@@ -267,7 +256,6 @@ export default function AdminContactsPage() {
                     <MenuItem value="read">Read Only</MenuItem>
                   </Select>
                 </FormControl>
-
 
                 <div className="text-creamy text-lg">
                   Showing {paginatedMessages.length} of {filteredMessages.length} messages
@@ -306,22 +294,6 @@ export default function AdminContactsPage() {
                       <p className="text-gray-300 mb-4">{message.subject}</p>
                       
                       <div className="flex space-x-2">
-                        {!message.read && (
-                          <button
-                            onClick={() => markAsRead(message._id)}
-                            style={{
-                              backgroundColor: '#2c0101',
-                              color: '#f8f3e9',
-                              border: '1px solid #f8f3e9',
-                              padding: '4px 12px',
-                              fontSize: '1.2rem',
-                              textTransform: 'none'
-                            }}
-                            className="rounded-md btn"
-                          >
-                            Mark as Read
-                          </button>
-                        )}
                         <button
                           onClick={() => deleteMessage(message._id)}
                           style={{

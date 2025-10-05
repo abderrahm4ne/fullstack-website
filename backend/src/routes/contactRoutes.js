@@ -29,4 +29,17 @@ router.get('/admin/show-messages', adminAuthentication, async(req, res) => {
     }
 })
 
+router.delete('/admin/delete-message/:id', adminAuthentication, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deletedContact = await Contact.findByIdAndDelete(id);
+        if (!deletedContact) {
+            return res.status(404).json({ message: 'Contact not found' });
+        }
+        res.status(200).json({ message: 'Contact deleted successfully', deletedContact });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error', err: err.message });
+    }
+});
+
 export default router;

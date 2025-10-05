@@ -39,7 +39,7 @@ router.get("/admin/orders/:id", async (req, res) => {
   }
 })
 
-router.patch("/admin/orders/:id", adminAuthentication, async (req, res) => {
+router.put("/admin/orders/:id", adminAuthentication, async (req, res) => {
   try {
     const order = await Order.findByIdAndUpdate(
       req.params.id,
