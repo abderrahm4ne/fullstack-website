@@ -54,7 +54,7 @@ export default function NavBar() {
 
         {/* Right - Icons */}
         <div className="flex-1 flex justify-end items-center space-x-3">
-          {/* Search Field - appears when searchOpen is true */}
+          {/* Search Field */}
           {searchOpen && (
             <div className="mr-4 transition-all duration-300 ease-in-out">
               <input
