@@ -33,6 +33,7 @@ input:-webkit-autofill:focus {
 .bg-accent {  background-color: #4CAF50; }
 .font-logo { font-family: 'Luxurious Script', sans-serif; }
 .font-routes {font-family: 'Average Sans', sans-serif;}
+.titles-font {font-family: 'Cormorant Garamond', serif;}
 
 .routes:hover {
     transition: transform 0.3s ease;

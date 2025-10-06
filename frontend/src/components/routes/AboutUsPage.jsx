@@ -37,7 +37,7 @@ export default function AboutUsPage() {
       {/* Hero Section */}
       <div className="container mx-auto px-6 py-8 mb-5">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-logo mb-6 creamy" style={{ textShadow: '-3px 3px 6px rgba(0, 0, 0, 0.8)' }}>
+          <h2 className="text-5xl md:text-6xl font-logo mb-6 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>
             Our Story
           </h2>
         </div>
@@ -55,7 +55,7 @@ export default function AboutUsPage() {
             />
           </div>
           <div className="md:w-1/2">
-            <h3 className="text-5xl font-logo mb-6 creamy">Beginning of an Era</h3>
+            <h3 className="text-5xl font-logo mb-6 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Beginning of an Era</h3>
             <p className="text-gray-300 text-xl mb-4">
               Founded in 2024, Nadzheee was founded with a vision to celebrate elegance that never fades.
               Rooted in the spirit of sophistication, our brand draws inspiration from the classic old-money style—where heritage meets refinement. From tailored polos to timeless berets, every piece is crafted to embody quiet luxury, confidence, and enduring taste.
@@ -74,7 +74,7 @@ export default function AboutUsPage() {
 
       {/* Values Section */}
       <div className="container mx-auto px-6 mb-20">
-        <h3 className="text-5xl md:text-6xl font-logo text-center mb-14 creamy">Our Values</h3>
+        <h3 className="text-5xl md:text-6xl font-logo text-center mb-14 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Our Values</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {values.map((value, index) => (
@@ -104,7 +104,7 @@ export default function AboutUsPage() {
             />
           </div>
           <div className="md:w-1/2">
-            <h3 className="text-6xl font-logo mb-6 creamy">Our Craft</h3>
+            <h3 className="text-6xl font-logo mb-6 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Our Craft</h3>
             <p className="text-gray-300 mb-4 text-3 text-6xlxl">
               At Nadzheee, we believe true elegance is found in the details. Every piece is created with intention—designed to capture the spirit of timeless style and refined simplicity.
             </p>

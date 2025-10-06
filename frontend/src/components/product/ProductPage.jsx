@@ -136,19 +136,19 @@ export default function ProductPage() {
         <nav className="text-sm text-gray-400 mb-6">
           <button 
             onClick={() => navigate('/products')}
-            className="hover:text-creamy transition-colors"
+            className="hover:text-creamy transition-colors hover:cursor-pointer"
           >
             Products
           </button>
           <span className="mx-2">/</span>
           <button 
             onClick={() => navigate(`/products?category=${product.category}`)}
-            className="hover:text-creamy transition-colors capitalize"
+            className="hover:text-creamy transition-colors capitalize hover:cursor-pointer"
           >
             {product.category}
           </button>
           <span className="mx-2">/</span>
-          <span className="text-creamy">{product.name}</span>
+          <span className="text-creamy hover:cursor-pointer">{product.name}</span>
         </nav>
       </div>
 
@@ -188,9 +188,10 @@ export default function ProductPage() {
           </div>
 
           {/* Product Info */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 ">
             <div className="bg-gradient-to-b from-[#2c0101] to-[#1a1a1a] rounded-2xl p-6 shadow-lg border border-[#f8f3e9]">
               <h1 className="text-3xl md:text-4xl creamy mb-4">{product.name}</h1>
+              <h3 className="text-xl md:text-xl creamy mb-8">{product.description}</h3>
               
               <div className="flex items-center mb-6">
                 <span className="text-xl font-bold text-creamy mr-4">{product.price} DZD</span>
@@ -200,8 +201,6 @@ export default function ProductPage() {
                   <span className="bg-red-900 text-red-300 px-3 py-1 rounded-full text-sm">Out of Stock</span>
                 )}
               </div>
-
-              <p className="text-gray-300 mb-6">{product.description}</p>
 
               {/* Quantity Selector */}
               <div className="flex items-center mb-6">

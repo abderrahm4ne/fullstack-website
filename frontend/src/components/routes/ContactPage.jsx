@@ -56,7 +56,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <div className="container mx-auto px-6 mb-12 py-6">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-logo mb-2 creamy" style={{ textShadow: '-3px 3px 6px rgba(0, 0, 0, 0.8)' }}>
+          <h2 className="text-5xl md:text-6xl font-logo mb-2 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>
             Get In Touch
           </h2>
           <p className="text-gray-300 fonts-routes italic text-lg mb-8">
@@ -71,7 +71,7 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="lg:w-1/2">
             <div className="bg-gradient-to-b from-[#2c0101] to-black rounded-xl p-8 shadow-lg" style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.5)' }}>
-              <h3 className="text-5xl font-logo mb-6 creamy">Send Us a Message</h3>
+              <h3 className="text-3xl titles-font mb-6 creamy tracking-tighter" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Send Us a Message</h3>
               
               <form onSubmit={handleSubmit}>
                 <div className="mb-6">
@@ -229,7 +229,7 @@ export default function ContactPage() {
           {/* Contact Information */}   
           <div className="lg:w-1/2">
             <div className="bg-gradient-to-b from-[#2c0101] to-black rounded-xl p-8 shadow-lg h-full" style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.5)' }}>
-              <h3 className="text-5xl font-logo mb-6 creamy">Contact Information</h3>
+              <h3 className="text-4xl titles-font mb-6 creamy tracking-tighter" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Contact Information</h3>
               
               <div className="space-y-6">
                 <div className="flex items-start">
@@ -292,7 +292,7 @@ export default function ContactPage() {
       {/* Map Section */}
       <div className="container mx-auto px-6 mt-16">
         <div className="bg-gradient-to-b from-[#2c0101] to-black rounded-xl p-8 shadow-lg" style={{ boxShadow: '0 10px 20px rgba(0,0,0,0.5)' }}>
-          <h3 className="text-5xl font-logo mb-6 creamy text-center">Find Us</h3>
+          <h3 className="text-4xl titles-font mb-6 creamy tracking-tighter text-center" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Find Us</h3>
           <div className="h-64 bg-gray-700 rounded-lg flex items-center justify-center">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1735.1554019381995!2d3.2428107153839907!3d36.77819809423424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e4f294680e335%3A0x1292df2e4508a8be!2sELETROMENAGERS%20AUX%20MEILLEURS%20PRIX!5e1!3m2!1sen!2sdz!4v1758467413549!5m2!1sen!2sdz"
@@ -309,7 +309,7 @@ export default function ContactPage() {
 
       {/* FAQ Section */}
       <div className="container mx-auto px-6 mt-16">
-        <h3 className="text-5xl font-logo text-center mb-10 creamy">Frequently Asked Questions</h3>
+        <h3 className="text-4xl titles-font text-center mb-10 creamy" style={{ textShadow: '-1px -3px 6px rgba(255, 255, 255, 0.8)' }}>Frequently Asked Questions</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
