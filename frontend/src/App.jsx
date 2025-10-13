@@ -36,6 +36,7 @@ function App() {
           <Route path='admin-contacts' element={<AdminContactsPage />} />
 
         </Route>
+        <Route path='*' element={<h1 className='font-bold text-black text-5xl'>404 - Page Not Found</h1>} />
       </>
     )
   );
